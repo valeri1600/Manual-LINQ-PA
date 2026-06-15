@@ -28,3 +28,5 @@ Cada capa cumple con una funcion en especifico:
 * ***Capa de Datos*** (El puente con la base de datos).
 * ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
 * ***Base de Datos*** (La base de datos real).
+
+  ![Concepto de LINQ](./assets/imagenes/Basededatos.png)
