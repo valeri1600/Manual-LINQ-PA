@@ -16,6 +16,6 @@
 
 ## Tecnologías Utilizadas
 * **Lenguaje:** C# (.NET Core)
-* **Herramientas:** LINQ to Entities / LINQ to Objects
-* **Arquitectura:** Diseño lógico en N-Capas
-* **Documentación:** GitHub Pages con estilo Markdown
+* **Herramientas:** LINQ to Entities 
+* **Arquitectura:** Diseño lógico en 4 Capas
+* **Documentación:** GitHub Pages 
