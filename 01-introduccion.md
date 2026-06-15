@@ -8,11 +8,11 @@ Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además
 
 Beneficios:
 
-El código es más fácil de leer y escribir
+* El código es más fácil de leer y escribir
 
-Con bases de datos (Entity Framework), LINQ se convierte automáticamente en SQL
+* Con bases de datos (Entity Framework), LINQ se convierte automáticamente en SQL
 
-El manejo de datos es más natural, consistente y eficiente para los desarrolladores.
+* El manejo de datos es más natural, consistente y eficiente para los desarrolladores.
 
 ## ¿Por qué se utiliza LINQ en una Arquitectura por Capas?
 En una arquitectura por capas, la regla principal es que cada parte del programa tenga una sola tarea. La capa de datos se encarga de conectarse a la base de datos y traer la información, pero es en la capa de negocio donde usamos LINQ. Se hace así porque LINQ nos permite filtrar, ordenar o agrupar esa información según lo que necesite la aplicación, manteniendo el código ordenado y separado de la base de datos.
