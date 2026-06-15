@@ -2,6 +2,7 @@
 <p align="center">
   <img src="./assets/imagenes/capas.png" alt="Concepto de LINQ y Capas" width="100">
 </p>
+
 ## 1. Capa de Presentación
 ***¿Qué es?****
 
