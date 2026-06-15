@@ -16,9 +16,6 @@ Se utiliza para recibir la información que ingresa el usuario y mostrarle los r
 * Mostrar mensajes y resultados.
 * Enviar solicitudes a la capa de negocio.
 * Recibir respuestas de la capa de negocio.
-Mini ejemplo
-
-En un sistema de inventario, el formulario "Registrar Producto" donde el usuario escribe el nombre, precio y stock del producto pertenece a esta capa.
 
 ## 2. Capa de Negocio
 ***¿Qué es?***
@@ -51,9 +48,6 @@ Se utiliza para ejecutar consultas y modificaciones en la base de datos sin que 
 * Eliminar datos.
 * Recuperar información.
 * Administrar conexiones y transacciones.
-Mini ejemplo
-
-Cuando se guarda un nuevo cliente, esta capa ejecuta el comando que inserta los datos en SQL Server.
 
 ## 4. Capa de Entidades
 ***¿Qué es?***
@@ -67,21 +61,118 @@ Se utiliza para definir la estructura de los datos que manejará la aplicación 
 * Definir propiedades y atributos.
 * Transportar datos entre capas.
 * Mantener una estructura organizada de la información.
-Mini ejemplo
-
-La clase:
-
-public class Producto
-{
-    public int IdProducto { get; set; }
-    public string Nombre { get; set; }
-    public decimal Precio { get; set; }
-    public int Stock { get; set; }
-}
-
-representa la información de un producto y puede ser utilizada por todas las capas.
 
 ## Funcionamiento general
 
 Cuando el usuario realiza una acción, la capa de presentación envía la solicitud a la capa de negocio. Esta procesa y valida la información, luego solicita a la capa de datos que acceda a la base de datos utilizando las entidades para transportar la información. Finalmente, la respuesta vuelve a la interfaz para mostrarse al usuario.
+
+## Ejemplo práctico: Uso de LINQ en una Arquitectura de 4 Capas
+
+Para demostrar el funcionamiento de LINQ dentro de una arquitectura de 4 capas, se desarrolló una aplicación en Visual Studio que simula lanzamientos de dos dados. El sistema genera resultados aleatorios, calcula puntajes y almacena la información en una base de datos SQL Server utilizando ADO.NET.
+
+Para desarrollar una aplicación utilizando el modelo de 4 capas en Visual Studio, primero se deben crear los proyectos que representarán cada capa: Capa de Entidades, Capa de Datos, Capa de Lógica de Negocio y Capa de Presentación. Esta separación permite distribuir las responsabilidades del sistema, logrando un código más ordenado, fácil de mantener y escalable.
+
+### Aplicación del modelo de 4 capas
+
+**Capa de Entidades**
+
+Se definió la clase `Dado_Entidad`, encargada de representar la información de cada lanzamiento:
+
+* Identificador del lanzamiento.
+* Valor del primer dado.
+* Valor del segundo dado.
+* Indicación de si ambos valores son iguales.
+* Puntaje obtenido.
+* Suma de los valores.
+* Promedio del lanzamiento.
+
+Esta entidad actúa como el medio de comunicación entre todas las capas.
+
+<p align="center">
+  <img src="./assets/imagenes/entidad.png" alt="Concepto de LINQ y Capas" width="650">
+</p>
+
+**Capa de Datos**
+
+La capa de datos utiliza ADO.NET para insertar y recuperar información desde SQL Server mediante los métodos `InsertarDado()` y `ListarDados()`.
+
+Aunque el acceso a la base de datos se realiza mediante consultas SQL tradicionales, los datos recuperados son transformados en una lista de objetos `Dado_Entidad`, permitiendo posteriormente aplicar consultas LINQ.
+
+<p align="center">
+  <img src="./assets/imagenes/datos1.png" alt="Concepto de LINQ y Capas" width="650">
+</p>
+
+<p align="center">
+  <img src="./assets/imagenes/datos2.png" alt="Concepto de LINQ y Capas" width="650">
+</p>
+
+**Capa de Negocio**
+
+La capa de negocio valida los valores generados y calcula el puntaje correspondiente a cada lanzamiento. Además, puede utilizar LINQ para obtener información procesada.
+
+Por ejemplo, para obtener únicamente los lanzamientos donde ambos dados tuvieron el mismo valor:
+
+```csharp
+var iguales = Dado_Datos.ListarDados()
+                         .Where(d => d.valoresIguales)
+                         .ToList();
+```
+
+Para obtener los lanzamientos con puntaje mayor a cero:
+
+```csharp
+var conPuntaje = Dado_Datos.ListarDados()
+                           .Where(d => d.puntaje > 0)
+                           .ToList();
+```
+
+---
+
+**Capa de Presentación**
+
+La interfaz permite indicar el número de lanzamientos, mostrar los resultados en un `DataGridView` y presentar estadísticas mediante un gráfico (`Chart`).
+
+En esta capa también se emplea LINQ para resumir información obtenida desde la lógica del negocio.
+
+Por ejemplo:
+
+```csharp
+int iguales = datos.Count(d => d.valoresIguales);
+int distintos = datos.Count(d => !d.valoresIguales);
+```
+
+Estas consultas permiten conocer cuántos lanzamientos tuvieron valores iguales y cuántos fueron diferentes.
+
+También podrían obtenerse otros resultados, como:
+
+**Cantidad total de lanzamientos:**
+
+```csharp
+int total = datos.Count();
+```
+
+**Promedio general de las sumas:**
+
+```csharp
+decimal promedioGeneral = datos.Average(d => d.suma);
+```
+
+**Puntaje máximo obtenido:**
+
+```csharp
+int puntajeMaximo = datos.Max(d => d.puntaje);
+```
+
+**Suma total de puntajes:**
+
+```csharp
+int totalPuntos = datos.Sum(d => d.puntaje);
+```
+
+---
+
+### Conclusión del ejemplo
+
+Este caso práctico demuestra que LINQ puede integrarse fácilmente dentro de una arquitectura de 4 capas. Aunque la persistencia de datos se realiza mediante ADO.NET, LINQ permite consultar, filtrar y analizar la información recuperada utilizando una sintaxis sencilla y legible. De esta manera, se mantiene la separación de responsabilidades entre capas y se obtiene un código más organizado, reutilizable y fácil de mantener.
+
 
