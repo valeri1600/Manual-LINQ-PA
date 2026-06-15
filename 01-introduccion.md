@@ -6,12 +6,10 @@ La idea principal de LINQ es unificar la forma de consultar y manipular datos. L
 
 Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además, cuando se usa con bases de datos (especialmente Entity Framework), LINQ traduce automáticamente las consultas al lenguaje SQL correspondiente, optimizando el acceso a la información.
 
-Beneficios:
+***Beneficios:***
 
 * El código es más fácil de leer y escribir
-
 * Con bases de datos (Entity Framework), LINQ se convierte automáticamente en SQL
-
 * El manejo de datos es más natural, consistente y eficiente para los desarrolladores.
 
 ## ¿Por qué se utiliza LINQ en una Arquitectura por Capas?
@@ -19,3 +17,8 @@ En una arquitectura por capas, la regla principal es que cada parte del programa
 
 ## Diagrama del Modelo de 4 capas y LINQ
 Cada capa cumple con una funcion en especifico:
+* ***Capa de Presentación*** (La interfaz de usuario: la pantalla).
+* ***Capa de Lógica de Negocio*** (Donde se procesan los datos).
+* ***Capa de Datos*** (El puente con la base de datos).
+* ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
+* ***Base de Datos*** (La base de datos real).
