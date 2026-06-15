@@ -1,6 +1,6 @@
 # LINQ 
 ## ¿ Qué es LINQ ?
-<div style="text-align: justify;">
+<p align="justify">
 LINQ (Language Integrated Query) es una tecnología desarrollada por Microsoft que forma parte del ecosistema .NET. Se trata de un conjunto de extensiones al lenguaje C#  que permite escribir consultas de manera directa dentro del código, utilizando una sintaxis similar a la de SQL, pero trabajando con datos de diferentes orígenes.
 
 La idea principal de LINQ es unificar la forma de consultar y manipular datos. LINQ permite usar la misma sintaxis y los mismos operadores independientemente de si los datos provienen de una lista de objetos, una base de datos, un documento XML, un servicio web o cualquier otra fuente que tenga un proveedor LINQ.
@@ -23,4 +23,4 @@ Cada capa cumple con una funcion en especifico:
 * ***Capa de Datos*** (El puente con la base de datos).
 * ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
 * ***Base de Datos*** (La base de datos real).
-</div>
+</p>
