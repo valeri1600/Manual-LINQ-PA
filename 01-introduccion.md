@@ -29,5 +29,5 @@ Cada capa cumple con una funcion en especifico:
 * ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
 * ***Base de Datos*** (La base de datos real).
 
-![Concepto cuatro capas](./assets/imagenes/Base%de%datos.png)
+![Modelo cuatro capas](./assets/imagenes/Base%20de%20datos.png)
 
