@@ -1,10 +1,10 @@
 # Arquitectura 4 Capas
 <p align="center">
-  <img src="./assets/imagenes/capas.png" alt="Concepto de LINQ y Capas" width="100">
+  <img src="./assets/imagenes/capas.png" alt="Concepto de LINQ y Capas" width="300">
 </p>
 
 ## 1. Capa de Presentación
-***¿Qué es?****
+***¿Qué es?***
 
 Es la capa que representa la parte visible del sistema. Es el medio por el cual el usuario interactúa con la aplicación mediante formularios, ventanas o páginas web.
 
@@ -21,7 +21,7 @@ Mini ejemplo
 En un sistema de inventario, el formulario "Registrar Producto" donde el usuario escribe el nombre, precio y stock del producto pertenece a esta capa.
 
 ## 2. Capa de Negocio
-***¿Qué es?****
+***¿Qué es?***
 
 Es la capa que contiene la lógica del sistema y las reglas que determinan cómo debe funcionar la aplicación. Se considera el cerebro del programa.
 
@@ -37,7 +37,7 @@ Se utiliza para procesar la información recibida desde la interfaz, validar dat
 
 
 ## 3. Capa de Datos
-***¿Qué es?**
+***¿Qué es?***
 
 Es la capa encargada de la comunicación directa con la base de datos. Gestiona todas las operaciones relacionadas con el almacenamiento y recuperación de información.
 
