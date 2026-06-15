@@ -108,16 +108,13 @@ Aunque el acceso a la base de datos se realiza mediante consultas SQL tradiciona
 
 **Capa de Negocio**
 
-La capa de negocio es la encargada de aplicar las reglas del sistema antes de almacenar la información. En este proyecto, valida que los valores obtenidos en los dados estén dentro del rango permitido (del 1 al 6), calcula la suma, el promedio y determina el puntaje correspondiente según las reglas establecidas.
+La capa de negocio aplica las reglas del sistema antes de almacenar la información. En este proyecto, valida que los valores de los dados estén entre 1 y 6, calcula la suma y el promedio, y determina el puntaje correspondiente a cada lanzamiento.
 
 Por ejemplo, antes de registrar un lanzamiento se verifica que los valores sean válidos:
 
-```csharp
-if (!ValidarDados(dado))
-{
-    throw new ArgumentException("Los valores de los dados deben estar entre 1 y 6.");
-}
-```
+<p align="center">
+  <img src="./assets/imagenes/negocio1.png" alt="Concepto de LINQ y Capas" width="300">
+</p>
 
 Posteriormente, se calcula la suma y el promedio de los dados:
 
@@ -128,28 +125,12 @@ dado.promedio = dado.suma / 2m;
 
 Finalmente, se asigna el puntaje. Si ambos dados tienen el mismo valor, se establece `valoresIguales` como verdadero; cuando el valor repetido es 1 o 6 se asignan 5 puntos, mientras que para cualquier otro valor igual se asignan 3 puntos. Si los valores son diferentes, el puntaje es 0.
 
-```csharp
-if (dado1 == dado2)
-{
-    dado.valoresIguales = true;
-
-    if (dado1 == 1 || dado1 == 6)
-    {
-        dado.puntaje = 5;
-    }
-    else
-    {
-        dado.puntaje = 3;
-    }
-}
-else
-{
-    dado.valoresIguales = false;
-    dado.puntaje = 0;
-}
-```
+<p align="center">
+  <img src="./assets/imagenes/negocio2.png" alt="Concepto de LINQ y Capas" width="300">
+</p>
 
 Una vez procesada la información, esta es enviada a la capa de datos para su almacenamiento mediante el método `InsertarDado()`.
+
 
 **Capa de Presentación**
 
