@@ -108,8 +108,6 @@ Aunque el acceso a la base de datos se realiza mediante consultas SQL tradiciona
 
 **Capa de Negocio**
 
-**Capa de Negocio**
-
 La capa de negocio es la encargada de aplicar las reglas del sistema antes de almacenar la información. En este proyecto, valida que los valores obtenidos en los dados estén dentro del rango permitido (del 1 al 6), calcula la suma, el promedio y determina el puntaje correspondiente según las reglas establecidas.
 
 Por ejemplo, antes de registrar un lanzamiento se verifica que los valores sean válidos:
@@ -177,7 +175,7 @@ ActualizarDatos();
 De esta manera, la capa de presentación se encarga de recibir las acciones del usuario y mostrar los resultados procesados por las demás capas.
 
 <p align="center">
-  <img src="./assets/imagenes/presentacion.png" alt="Concepto de LINQ y Capas" width="300">
+  <img src="./assets/imagenes/presentacion.png" alt="Concepto de LINQ y Capas" width="500">
 </p>
 
 ### Conclusión del ejemplo
