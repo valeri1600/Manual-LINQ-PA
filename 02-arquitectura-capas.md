@@ -155,46 +155,30 @@ Una vez procesada la información, esta es enviada a la capa de datos para su al
 
 **Capa de Presentación**
 
-La interfaz permite indicar el número de lanzamientos, mostrar los resultados en un `DataGridView` y presentar estadísticas mediante un gráfico (`Chart`).
+La capa de presentación es la encargada de la interacción entre el usuario y el sistema. En este proyecto, permite ingresar el número de lanzamientos de los dados, generar los resultados, mostrar la información almacenada en un `DataGridView` y representar gráficamente las estadísticas obtenidas mediante un `Chart`.
 
-En esta capa también se emplea LINQ para resumir información obtenida desde la lógica del negocio.
-
-Por ejemplo:
+Por ejemplo, el usuario ingresa la cantidad de lanzamientos y, al presionar el botón correspondiente, el sistema genera valores aleatorios para los dados y actualiza automáticamente la tabla y el gráfico con los resultados obtenidos.
 
 ```csharp
-int iguales = datos.Count(d => d.valoresIguales);
-int distintos = datos.Count(d => !d.valoresIguales);
+int n = Convert.ToInt32(textBox_Lanzamientos.Text);
+
+for (int i = 0; i < n; i++)
+{
+    Dado_Entidad dados = new Dado_Entidad();
+    dados.valorDado1 = dado1.Next(1, 7);
+    dados.valorDado2 = dado1.Next(1, 7);
+
+    Capa_LogicaNegocio.Dado_Logica.InsertarDados(dados);
+}
+
+ActualizarDatos();
 ```
 
-Estas consultas permiten conocer cuántos lanzamientos tuvieron valores iguales y cuántos fueron diferentes.
+De esta manera, la capa de presentación se encarga de recibir las acciones del usuario y mostrar los resultados procesados por las demás capas.
 
-También podrían obtenerse otros resultados, como:
-
-**Cantidad total de lanzamientos:**
-
-```csharp
-int total = datos.Count();
-```
-
-**Promedio general de las sumas:**
-
-```csharp
-decimal promedioGeneral = datos.Average(d => d.suma);
-```
-
-**Puntaje máximo obtenido:**
-
-```csharp
-int puntajeMaximo = datos.Max(d => d.puntaje);
-```
-
-**Suma total de puntajes:**
-
-```csharp
-int totalPuntos = datos.Sum(d => d.puntaje);
-```
-
----
+<p align="center">
+  <img src="./assets/imagenes/presentacion.png" alt="Concepto de LINQ y Capas" width="300">
+</p>
 
 ### Conclusión del ejemplo
 
