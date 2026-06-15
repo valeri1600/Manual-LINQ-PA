@@ -1,5 +1,3 @@
-# Manual de LINQ
-
 ## Objetivos del Proyecto
 * **Aprender la arquitectura:** Comprender cómo se comunican la capa de Datos, Negocio y Presentación.
 * **Optimizar código:** Reemplazar bucles e iteraciones largas por consultas LINQ de una sola línea.
