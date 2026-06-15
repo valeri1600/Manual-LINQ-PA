@@ -30,5 +30,5 @@ Cada capa cumple con una funcion en especifico:
 * ***Base de Datos*** (La base de datos real).
 
 <p align="center">
-  <img src="./assets/imagenes/Base%20de%20datos.png" alt="Concepto de LINQ y Capas" width="650">
+  <img src="./assets/imagenes/Base%20de%20datos.png" alt="Concepto de LINQ y Capas" width="300">
 </p>
