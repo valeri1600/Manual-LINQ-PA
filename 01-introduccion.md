@@ -6,6 +6,7 @@ LINQ (Language Integrated Query) es una tecnología desarrollada por Microsoft q
 La idea principal de LINQ es unificar la forma de consultar y manipular datos. LINQ permite usar la misma sintaxis y los mismos operadores independientemente de si los datos provienen de una lista de objetos, una base de datos, un documento XML, un servicio web o cualquier otra fuente que tenga un proveedor LINQ.
 
 Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además, cuando se usa con bases de datos (especialmente Entity Framework), LINQ traduce automáticamente las consultas al lenguaje SQL correspondiente, optimizando el acceso a la información.
+</p>
 
 ***Beneficios:***
 
@@ -23,4 +24,3 @@ Cada capa cumple con una funcion en especifico:
 * ***Capa de Datos*** (El puente con la base de datos).
 * ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
 * ***Base de Datos*** (La base de datos real).
-</p>
