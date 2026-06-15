@@ -29,5 +29,6 @@ Cada capa cumple con una funcion en especifico:
 * ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
 * ***Base de Datos*** (La base de datos real).
 
-![Modelo cuatro capas](./assets/imagenes/Base%20de%20datos.png)
-
+<p align="center">
+  <img src="./assets/imagenes/Base%20de%20datos.png" alt="Concepto de LINQ y Capas" width="650">
+</p>
