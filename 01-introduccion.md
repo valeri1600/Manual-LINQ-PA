@@ -1,1 +1,2 @@
-
+# LINQ 
+## ¿ Qué es LINQ ?
