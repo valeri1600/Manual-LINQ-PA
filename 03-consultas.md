@@ -11,19 +11,51 @@ En las consultas de LINQ existen dos tipos principales: la **sintaxis de consult
 Esta sintaxis es muy parecida a SQL y utiliza palabras clave como `from`, `where` y `select`, lo que facilita su comprensión inicial.
 
 ```csharp
-var resultado =
-    from d in listaDados
-    where d.puntaje > 0
-    select d;
+  var resultado =
+        (from d in contexto.Dados
+         where d.puntaje > 0
+         select d)
+        .ToList();
 ```
+
+La sintaxis de consulta sigue prácticamente el mismo orden que una consulta SQL tradicional:
+
+```text
+FROM → WHERE → GROUP BY → ORDER BY → SELECT
+```
+
+Donde:
+
+- `FROM`  indica de dónde provienen los datos.
+- `WHERE`  filtra los registros.
+- `GROUP BY` agrupa la información.
+- `ORDER BY` ordena los resultados.
+- `SELECT` indica qué información se devolverá.
+
+  
 ### Sintaxis de métodos (Lambda)
 La sintaxis que utilizaremos en este proyecto es la sintaxis de métodos (lambda), ya que es más práctica, flexible y se usa con mayor frecuencia en aplicaciones reales.
 
 ```csharp
-var resultado = listaDados
-                .Where(d => d.puntaje > 0)
-                .ToList();
-```            
+ var resultado = contexto.Dados
+                            .Where(d => d.puntaje > 0)
+                            .ToList();
+```
+
+La sintaxis lambda sigue el flujo natural de los datos, comenzando desde la tabla y aplicando los operadores paso a paso:
+
+```text
+Origen de datos → Where() → GroupBy() → Select() → OrderBy() → ToList()
+```
+
+Donde:
+
+- **Origen de datos** corresponde a la tabla del `DataContext`.
+- `Where()`  filtra los registros.
+- `GroupBy()`  agrupa la información.
+- `Select()` →define el resultado final que se desea obtener.
+- `OrderBy()` o `OrderByDescending()`  ordena los datos.
+- `ToList()`  ejecuta la consulta y convierte el resultado en una lista.
 
 ## Estructura base de una consulta LINQ
 
