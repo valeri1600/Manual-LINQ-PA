@@ -121,7 +121,7 @@ Permite ejecutar una consulta LINQ y convertir el resultado en una lista (List),
 ```csharp
 var lista = contexto.Dados.ToList();
 ```
-`ToList()` → ejecuta la consulta y convierte los registros en una lista de objetos (List <Dados> ).
+`ToList()` → ejecuta la consulta y convierte los registros en una lista de objetos (List "<Dados>").
 
 ## Where — Filtrar registros
 
