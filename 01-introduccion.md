@@ -20,6 +20,26 @@ Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además
 <p align="justify">
 LINQ se utiliza en una arquitectura por capas porque facilita la consulta y manipulación de datos de una manera clara y ordenada, respetando la responsabilidad de cada capa. Permite filtrar, ordenar, agrupar y transformar información con menos código, lo que mejora el mantenimiento y la reutilización del sistema, evitando mezclar la lógica del negocio con el acceso a los datos.
 
+
+## Diagrama del Modelo de 4 capas y LINQ
+Cada capa cumple con una funcion en especifico:
+* ***Capa de Presentación*** (La interfaz de usuario: la pantalla).
+* ***Capa de Lógica de Negocio*** (Donde se procesan los datos).
+* ***Capa de Datos*** (Se usa para realizar consultas a la base de datos).
+* ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
+* ***Base de Datos*** (La base de datos real).
+
+<p align="center">
+  <img src="./assets/imagenes/Base%20de%20datos.png" alt="Concepto de LINQ y Capas" width="300">
+</p>
+
+## Ventajas de usar LINQ en capas
+* Hace el código más fácil de leer y mantener.
+* Reduce la cantidad de código necesario para consultar datos.
+* Utiliza la misma sintaxis para diferentes fuentes de datos.
+* Disminuye la probabilidad de errores al manipular colecciones.
+* Facilita la separación de responsabilidades entre las capas.
+
 Con LINQ hace el código más **legible**, **mantenible** y **seguro** (evita errores de iteración manual).
 
 ```csharp
@@ -51,22 +71,3 @@ var resultado = (from x in lista
 | `Any` | Verificar existencia | `.Any(x => x.Nombre == "Ana")` |
 
 ---
-
-## Diagrama del Modelo de 4 capas y LINQ
-Cada capa cumple con una funcion en especifico:
-* ***Capa de Presentación*** (La interfaz de usuario: la pantalla).
-* ***Capa de Lógica de Negocio*** (Donde se procesan los datos).
-* ***Capa de Datos*** (Se usa para realizar consultas a la base de datos).
-* ***Capa de Entidad*** (Los moldes de los objetos y el idioma común que usan todas las capas para pasarse datos).
-* ***Base de Datos*** (La base de datos real).
-
-<p align="center">
-  <img src="./assets/imagenes/Base%20de%20datos.png" alt="Concepto de LINQ y Capas" width="300">
-</p>
-
-## Ventajas de usar LINQ en capas
-* Hace el código más fácil de leer y mantener.
-* Reduce la cantidad de código necesario para consultar datos.
-* Utiliza la misma sintaxis para diferentes fuentes de datos.
-* Disminuye la probabilidad de errores al manipular colecciones.
-* Facilita la separación de responsabilidades entre las capas.
