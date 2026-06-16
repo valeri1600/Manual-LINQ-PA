@@ -1,7 +1,12 @@
-Esta sección presenta escenarios reales resueltos con LINQ, tomados directamente del **Sistema de Gestión de Pacientes** desarrollado en clase. Se sigue el flujo: **problema → código por capa → resultado**.
+# 6. Casos prácticos
 
-> **Proyecto fuente:** `GestionUsuarios` — Sistema de registro y administración de pacientes con géneros, afiliación al IESS y gestión completa CRUD.
+En esta sección se presentan escenarios reales resueltos con LINQ to SQL, tomados del Sistema de Gestión de Pacientes desarrollado durante las prácticas de clase. Cada caso muestra cómo se aplican los conceptos estudiados siguiendo el flujo de trabajo de la arquitectura de cuatro capas del sistema.
 
+La estructura utilizada en cada ejemplo es la siguiente:
+
+Problema → Implementación por capas → Resultado esperado
+
+Proyecto utilizado: GestionUsuarios — Sistema de registro y administración de pacientes, con gestión de géneros, afiliación al IESS y operaciones CRUD completas.
 ---
 
 ## Estructura del proyecto
@@ -22,9 +27,9 @@ GestionUsuarios/
 ## Caso 1: Listar todos los pacientes con su género
 
 ### Problema
-El formulario necesita mostrar en un `DataGridView` todos los pacientes registrados, incluyendo el **nombre del género** (no solo el ID), que viene de una tabla separada.
+El formulario del sistema debe mostrar en un DataGridView todos los pacientes registrados, incluyendo el nombre del género correspondiente. Aunque la tabla Paciente almacena únicamente el identificador del género, el usuario debe visualizar una descripción comprensible en lugar del valor numérico.
 
-### Entidades involucradas
+### Entidades 
 
 ```csharp
 // Ref: GestionUsuarios_Entidades/PacienteEntidades.cs
@@ -44,33 +49,30 @@ public class PacienteEntidades
 }
 ```
 
-### Paso 1 — Capa de Datos: consulta LINQ to SQL
+### Paso 1 — Capa de Datos
+En la Capa de Datos se recuperan todos los registros de la tabla Paciente. Posteriormente, cada objeto obtenido mediante LINQ to SQL es transformado en una entidad del sistema (PacienteEntidades) para ser utilizada por las demás capas.
 
 ```csharp
-// Ref: GestionUsuariosLinQ/PacienteDatos.cs → método DevolverListaPaciente()
 public static List<PacienteEntidades> DevolverListaPaciente()
 {
-    List<PacienteEntidades> listaPaciente    = new List<PacienteEntidades>();
-    List<Paciente>          listaPacienteLinq = new List<Paciente>();
+    List<PacienteEntidades> listaPaciente = new List<PacienteEntidades>();
+    List<Paciente> listaPacienteLinq = new List<Paciente>();
 
     using (ModePacienteDataContext contexto = new ModePacienteDataContext())
     {
-        // LINQ to SQL: trae todos los pacientes de la base de datos
         var resultado = from p in contexto.Paciente
-                        select p;
+                         select p;
 
         listaPacienteLinq = resultado.ToList();
     }
 
-    // Convierte cada objeto LINQ en una entidad del sistema
-    // y resuelve el nombre del género consultando GeneroDatos
     foreach (var item in listaPacienteLinq)
     {
         listaPaciente.Add(new PacienteEntidades(
             item.id,
             (int)item.id_Genero,
             item.nombre,
-            GeneroDatos.DevolverNombreGeneroPorId((int)item.id_Genero), // JOIN manual
+            GeneroDatos.DevolverNombreGeneroPorId((int)item.id_Genero),
             item.apellido,
             item.cedula,
             Convert.ToDateTime(item.fechaNacimiento),
@@ -85,22 +87,29 @@ public static List<PacienteEntidades> DevolverListaPaciente()
 }
 ```
 
-> 💡 **Observación:** Como el proyecto usa LINQ to SQL (no Entity Framework), el "JOIN" entre `Paciente` y `Genero` se resuelve manualmente llamando a `GeneroDatos.DevolverNombreGeneroPorId()` por cada paciente dentro del `foreach`.
+### Aspectos importantes
+* Se utilizan dos listas porque pertenecen a capas diferentes de la aplicación.
+* `List<Paciente>` almacena los registros obtenidos directamente desde la base de datos.
+* `List<PacienteEntidades>` contiene los objetos que serán enviados a la Capa de Negocio y Presentación.
+* El foreach permite transformar cada objeto LINQ (`Paciente`) en una entidad propia del sistema (`PacienteEntidades`).
+* El nombre del género se obtiene mediante una consulta adicional utilizando el método `GeneroDatos.DevolverNombreGeneroPorId()`.
 
-### Paso 2 — Capa de Negocio: expone el método
+Debido a que el proyecto utiliza LINQ to SQL y no Entity Framework, la relación entre `Paciente` y `Genero` se resuelve manualmente dentro del recorrido realizado por el foreach.
+
+### Paso 2 — Capa de Negocio
+La Capa de Negocio expone el método para que pueda ser utilizado por la interfaz de usuario.
 
 ```csharp
-// Ref: GestionUsuarios_LogicaNegocio/PacienteNegocio.cs → método DevolverListaPaciente()
 public static List<PacienteEntidades> DevolverListaPaciente()
 {
     return PacienteDatos.DevolverListaPaciente();
 }
 ```
 
-### Paso 3 — Capa de Presentación: llena el DataGridView
+### Paso 3 — Capa de Presentación
+Finalmente, la Capa de Presentación obtiene la información desde la Capa de Negocio y la muestra en el DataGridView.
 
 ```csharp
-// Ref: Presentacion/Form_Paciente.cs → método para cargar la grilla
 private void CargarListaPacientes()
 {
     dataGridView1.DataSource = PacienteNegocio.DevolverListaPaciente();
@@ -117,275 +126,491 @@ private void CargarListaPacientes()
 
 ---
 
-## Caso 2: Buscar un paciente por ID
+# Caso 2: Buscar un paciente por ID utilizando `FirstOrDefault()`
 
-### Problema
-Al seleccionar un paciente en la grilla, el formulario debe cargar todos sus datos en los campos de texto para poder editarlos.
+## Problema
 
-### Solución LINQ
+Cuando el usuario selecciona un paciente desde el `DataGridView`, el sistema debe recuperar todos sus datos para mostrarlos en los campos del formulario y permitir su actualización.
 
-**Capa de Datos — `FirstOrDefault` con condición:**
+---
+
+## Paso 1: Capa de Datos
+
+La Capa de Datos utiliza `FirstOrDefault()` para localizar el primer paciente que coincida con el valor recibido como parámetro. Posteriormente, los datos obtenidos desde LINQ to SQL son convertidos a una entidad del sistema.
 
 ```csharp
-// Ref: GestionUsuariosLinQ/PacienteDatos.cs → método CargarPacientePorId()
 public static PacienteEntidades CargarPacientePorId(int id)
 {
     PacienteEntidades paciente = new PacienteEntidades();
 
     using (ModePacienteDataContext contexto = new ModePacienteDataContext())
     {
-        // LINQ: busca el primer paciente cuyo id coincida, o null si no existe
-        Paciente pacienteLinQ = contexto.Paciente.FirstOrDefault(p => p.id == id);
+        Paciente pacienteLinQ = contexto.Paciente
+                                        .FirstOrDefault(p => p.id == id);
 
-        // Mapea el objeto LINQ a la entidad del sistema
-        paciente.Id              = pacienteLinQ.id;
-        paciente.Id_Genero       = (int)pacienteLinQ.id_Genero;
-        paciente.Nombre          = pacienteLinQ.nombre;
-        paciente.Apellido        = pacienteLinQ.apellido;
-        paciente.Cedula          = pacienteLinQ.cedula;
+        paciente.Id = pacienteLinQ.id;
+        paciente.Id_Genero = (int)pacienteLinQ.id_Genero;
+        paciente.Nombre = pacienteLinQ.nombre;
+        paciente.Apellido = pacienteLinQ.apellido;
+        paciente.Cedula = pacienteLinQ.cedula;
         paciente.FechaNacimiento = Convert.ToDateTime(pacienteLinQ.fechaNacimiento);
-        paciente.Telefono        = pacienteLinQ.telefono;
-        paciente.Direccion       = pacienteLinQ.direccion;
-        paciente.Afiliado        = (bool)pacienteLinQ.afiliado;
-        paciente.CodigoIESS      = pacienteLinQ.codigoIess;
+        paciente.Telefono = pacienteLinQ.telefono;
+        paciente.Direccion = pacienteLinQ.direccion;
+        paciente.Afiliado = (bool)pacienteLinQ.afiliado;
+        paciente.CodigoIESS = pacienteLinQ.codigoIess;
 
         return paciente;
     }
 }
 ```
 
-**Capa de Negocio:**
+### Aspectos importantes
+
+* `FirstOrDefault()` busca el primer registro que cumpla la condición especificada.
+* En este caso, la condición es que el `id` del paciente sea igual al valor recibido por el método.
+* `pacienteLinQ` representa el objeto obtenido directamente desde la base de datos.
+* `paciente` corresponde a la entidad utilizada por la arquitectura del sistema.
+* Los datos son transferidos desde `pacienteLinQ` hacia `PacienteEntidades` para mantener la separación entre capas.
+
+> **Importante:** Si no existe un paciente con el identificador solicitado, `FirstOrDefault()` devolverá `null`. Es recomendable verificar el resultado antes de acceder a sus propiedades.
+
+---
+
+## Paso 2: Capa de Negocio
+
+La Capa de Negocio expone el método para que pueda ser utilizado desde la interfaz de usuario.
 
 ```csharp
-// Ref: GestionUsuarios_LogicaNegocio/PacienteNegocio.cs → método CargarPacientePorId()
 public static PacienteEntidades CargarPacientePorId(int id)
 {
     return PacienteDatos.CargarPacientePorID(id);
 }
 ```
 
-> ⚠️ `FirstOrDefault` devuelve `null` si no encuentra el registro. Si el ID no existe en la BD, el acceso a `pacienteLinQ.nombre` lanzaría una excepción `NullReferenceException`. En producción siempre se verifica antes de mapear.
-
 ---
 
-## Caso 3: Registrar un nuevo paciente con validación
+## Paso 3: Capa de Presentación
 
-### Problema
-Antes de insertar un paciente en la base de datos, el sistema debe **validar** que el nombre no esté vacío y luego persistir los datos usando una transacción.
-
-### Solución — Flujo completo por capas
-
-**Capa de Negocio — validación + transacción:**
+Una vez obtenido el paciente, la información puede asignarse a los controles del formulario.
 
 ```csharp
-// Ref: GestionUsuarios_LogicaNegocio/PacienteNegocio.cs → método GuardarPaciente()
-public static PacienteEntidades GuardarPaciente(PacienteEntidades paciente)
-{
-    try
-    {
-        using (TransactionScope scope = new TransactionScope())
-        {
-            // Regla de negocio: el nombre es obligatorio
-            if (string.IsNullOrWhiteSpace(paciente.Nombre))
-            {
-                paciente.errror = "El nombre es obligatorio";
-                return paciente;
-            }
+PacienteEntidades paciente = PacienteNegocio.CargarPacientePorId(idSeleccionado);
 
-            // Si pasa la validación, llama a la capa de Datos
-            PacienteDatos.Nuevo(paciente);
-            scope.Complete();       // Confirma la transacción
-            paciente.errror = "";
-        }
-    }
-    catch (Exception ex)
-    {
-        paciente.errror = ex.Message;   // Si algo falla, captura el error
-    }
-
-    return paciente;
-}
-```
-
-**Capa de Datos — `InsertOnSubmit` con LINQ to SQL:**
-
-```csharp
-// Ref: GestionUsuariosLinQ/PacienteDatos.cs → método Nuevo()
-public static PacienteEntidades Nuevo(PacienteEntidades paciente)
-{
-    // Crea el objeto LINQ que mapea a la tabla Paciente en SQL
-    Paciente pacienteLinq = new Paciente();
-    pacienteLinq.id              = paciente.Id;
-    pacienteLinq.id_Genero       = (int)paciente.Id_Genero;
-    pacienteLinq.nombre          = paciente.Nombre;
-    pacienteLinq.apellido        = paciente.Apellido;
-    pacienteLinq.cedula          = paciente.Cedula;
-    pacienteLinq.fechaNacimiento = paciente.FechaNacimiento;
-    pacienteLinq.telefono        = paciente.Telefono;
-    pacienteLinq.direccion       = paciente.Direccion;
-    pacienteLinq.afiliado        = paciente.Afiliado;
-    pacienteLinq.codigoIess      = paciente.CodigoIESS;
-
-    using (ModePacienteDataContext contexto = new ModePacienteDataContext())
-    {
-        contexto.Paciente.InsertOnSubmit(pacienteLinq);   // Marca para insertar
-        contexto.SubmitChanges();                          // Ejecuta INSERT en SQL
-    }
-
-    paciente.Id = pacienteLinq.id;   // Recupera el ID generado por la BD
-    return paciente;
-}
-```
-
-**SQL generado por LINQ to SQL:**
-```sql
-INSERT INTO Paciente (id_Genero, nombre, apellido, cedula, fechaNacimiento,
-                      telefono, direccion, afiliado, codigoIess)
-VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+txtNombre.Text = paciente.Nombre;
+txtApellido.Text = paciente.Apellido;
+txtCedula.Text = paciente.Cedula;
+txtTelefono.Text = paciente.Telefono;
+txtDireccion.Text = paciente.Direccion;
 ```
 
 ---
 
-## Caso 4: Actualizar datos de un paciente
+## Resultado esperado
 
-### Problema
-El usuario modifica los datos de un paciente en el formulario y presiona "Guardar". El sistema debe actualizar **solo ese registro** en la base de datos.
+Si el usuario selecciona el paciente con identificador `1`, el sistema recuperará toda su información y la mostrará automáticamente en los controles del formulario para que pueda ser visualizada o modificada.
 
-### Solución LINQ
+---
+
+## Conclusión
+
+El método `FirstOrDefault()` es una de las funciones más utilizadas en LINQ, ya que permite recuperar un único registro a partir de una condición específica. En este caso, facilita la búsqueda de un paciente por su identificador, permitiendo cargar rápidamente su información para realizar procesos de consulta o actualización.
+
+
+# Caso 3: Registrar un nuevo paciente utilizando `InsertOnSubmit()` y `SubmitChanges()`
+
+## Problema
+
+El sistema debe registrar un nuevo paciente con toda la información proporcionada por el usuario, incluyendo sus datos personales, género y afiliación al IESS.
+
+---
+
+## Paso 1: Capa de Datos
+
+La Capa de Datos recibe un objeto `PacienteEntidades`, crea una entidad `Paciente` generada por LINQ to SQL, copia la información correspondiente y posteriormente realiza la inserción en la base de datos.
 
 ```csharp
-// Ref: GestionUsuariosLinQ/PacienteDatos.cs → método Actualizar()
-public static PacienteEntidades Actualizar(PacienteEntidades paciente)
+public static PacienteEntidades InsertarPaciente(PacienteEntidades paciente)
 {
+    Paciente pacienteLinQ = new Paciente();
+
+    pacienteLinQ.id_Genero = paciente.Id_Genero;
+    pacienteLinQ.nombre = paciente.Nombre;
+    pacienteLinQ.apellido = paciente.Apellido;
+    pacienteLinQ.cedula = paciente.Cedula;
+    pacienteLinQ.fechaNacimiento = paciente.FechaNacimiento;
+    pacienteLinQ.telefono = paciente.Telefono;
+    pacienteLinQ.direccion = paciente.Direccion;
+    pacienteLinQ.afiliado = paciente.Afiliado;
+    pacienteLinQ.codigoIess = paciente.CodigoIESS;
+
     using (ModePacienteDataContext contexto = new ModePacienteDataContext())
     {
-        // LINQ: localiza el registro existente por su ID
-        Paciente pacienteLinQ = contexto.Paciente.FirstOrDefault(p => p.id == paciente.Id);
-
-        // Sobreescribe los campos con los nuevos valores
-        pacienteLinQ.id_Genero       = (int)paciente.Id_Genero;
-        pacienteLinQ.nombre          = paciente.Nombre;
-        pacienteLinQ.apellido        = paciente.Apellido;
-        pacienteLinQ.cedula          = paciente.Cedula;
-        pacienteLinQ.fechaNacimiento = paciente.FechaNacimiento;
-        pacienteLinQ.telefono        = paciente.Telefono;
-        pacienteLinQ.direccion       = paciente.Direccion;
-        pacienteLinQ.afiliado        = paciente.Afiliado;
-        pacienteLinQ.codigoIess      = paciente.CodigoIESS;
-
-        // SubmitChanges detecta los cambios y genera el UPDATE automáticamente
+        contexto.Paciente.InsertOnSubmit(pacienteLinQ);
         contexto.SubmitChanges();
+    }
+
+    paciente.Id = pacienteLinQ.id;
+
+    return paciente;
+}
+```
+
+### Aspectos importantes
+
+* `paciente` es un objeto de tipo `PacienteEntidades`, perteneciente a la Capa de Entidades.
+* `pacienteLinQ` representa la entidad `Paciente` generada por LINQ to SQL y asociada a la tabla real de la base de datos.
+* Los datos ingresados son transferidos desde `PacienteEntidades` hacia `Paciente`.
+* `InsertOnSubmit()` registra el nuevo objeto para su inserción.
+* `SubmitChanges()` ejecuta la operación y guarda el registro en SQL Server.
+* El identificador generado automáticamente por la base de datos es recuperado y asignado nuevamente a la entidad.
+* Finalmente, se devuelve el objeto con toda su información actualizada.
+
+> **Importante:** Si se utiliza `InsertOnSubmit()` sin ejecutar `SubmitChanges()`, el registro no será almacenado en la base de datos.
+
+---
+
+## Paso 2: Capa de Negocio
+
+La Capa de Negocio actúa como intermediaria entre la interfaz y la Capa de Datos.
+
+```csharp
+public static PacienteEntidades InsertarPaciente(PacienteEntidades paciente)
+{
+    return PacienteDatos.InsertarPaciente(paciente);
+}
+```
+
+---
+
+## Paso 3: Capa de Presentación
+
+Desde el formulario se recopilan los datos ingresados por el usuario y se envían a la Capa de Negocio.
+
+```csharp
+PacienteEntidades paciente = new PacienteEntidades
+{
+    Id_Genero = Convert.ToInt32(cmbGenero.SelectedValue),
+    Nombre = txtNombre.Text,
+    Apellido = txtApellido.Text,
+    Cedula = txtCedula.Text,
+    FechaNacimiento = dtpFechaNacimiento.Value,
+    Telefono = txtTelefono.Text,
+    Direccion = txtDireccion.Text,
+    Afiliado = chkAfiliado.Checked,
+    CodigoIESS = txtCodigoIESS.Text
+};
+
+PacienteNegocio.InsertarPaciente(paciente);
+
+MessageBox.Show("Paciente registrado correctamente.");
+```
+
+---
+
+## Resultado esperado
+
+Al completar el formulario y presionar el botón de guardar, el nuevo paciente será almacenado en la base de datos y se generará automáticamente su identificador correspondiente.
+
+---
+
+## Conclusión
+
+La operación de inserción demuestra cómo LINQ to SQL facilita el registro de nuevos datos mediante los métodos `InsertOnSubmit()` y `SubmitChanges()`. Además, evidencia la comunicación entre las diferentes capas de la aplicación, manteniendo separada la lógica del negocio del acceso directo a la base de datos.
+
+# Caso 4: Actualizar la información de un paciente utilizando `FirstOrDefault()` y `SubmitChanges()`
+
+## Problema
+
+El sistema debe permitir editar los datos de un paciente existente cuando el usuario realice modificaciones desde el formulario.
+
+---
+
+## Paso 1: Capa de Datos
+
+La Capa de Datos busca el paciente que se desea actualizar utilizando su identificador. Una vez localizado, se modifican sus propiedades con los nuevos valores recibidos desde la Capa de Negocio y se guardan los cambios.
+
+```csharp
+public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
+{
+    using (ModePacienteDataContext contexto = new ModePacienteDataContext())
+    {
+        Paciente pacienteLinQ = contexto.Paciente
+                                        .FirstOrDefault(p => p.id == paciente.Id);
+
+        pacienteLinQ.id_Genero = paciente.Id_Genero;
+        pacienteLinQ.nombre = paciente.Nombre;
+        pacienteLinQ.apellido = paciente.Apellido;
+        pacienteLinQ.cedula = paciente.Cedula;
+        pacienteLinQ.fechaNacimiento = paciente.FechaNacimiento;
+        pacienteLinQ.telefono = paciente.Telefono;
+        pacienteLinQ.direccion = paciente.Direccion;
+        pacienteLinQ.afiliado = paciente.Afiliado;
+        pacienteLinQ.codigoIess = paciente.CodigoIESS;
+
+        contexto.SubmitChanges();
+
         return paciente;
     }
 }
 ```
 
-**SQL generado:**
-```sql
-UPDATE Paciente
-SET id_Genero = @p0, nombre = @p1, apellido = @p2, cedula = @p3,
-    fechaNacimiento = @p4, telefono = @p5, direccion = @p6,
-    afiliado = @p7, codigoIess = @p8
-WHERE id = @p9
-```
+### Aspectos importantes
+
+* `FirstOrDefault()` permite localizar el paciente que será modificado.
+* `pacienteLinQ` representa el registro obtenido directamente desde la base de datos.
+* `paciente` corresponde a la entidad utilizada por la arquitectura del sistema.
+* Los nuevos valores son transferidos desde `PacienteEntidades` hacia la entidad de LINQ to SQL.
+* `SubmitChanges()` guarda definitivamente las modificaciones realizadas.
+* El método devuelve la entidad actualizada.
+
+> **Importante:** Si el paciente no existe, `FirstOrDefault()` devolverá `null`, por lo que es recomendable validar el resultado antes de modificar sus propiedades.
 
 ---
 
-## Caso 5: Eliminar un paciente
+## Paso 2: Capa de Negocio
 
-### Problema
-El usuario selecciona un paciente y presiona "Eliminar". El sistema debe borrarlo de la base de datos.
-
-### Solución LINQ
+La Capa de Negocio expone el método de actualización para que pueda ser utilizado por la interfaz de usuario.
 
 ```csharp
-// Ref: GestionUsuariosLinQ/PacienteDatos.cs → método EliminarPacientePorID()
-public static bool EliminarPacientePorID(int id)
+public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
 {
-    try
-    {
-        using (ModePacienteDataContext contexto = new ModePacienteDataContext())
-        {
-            // LINQ: encuentra el registro a eliminar
-            Paciente pacienteLinQ = contexto.Paciente.FirstOrDefault(p => p.id == id);
-
-            contexto.Paciente.DeleteOnSubmit(pacienteLinQ);   // Marca para eliminar
-            contexto.SubmitChanges();                          // Ejecuta DELETE en SQL
-            return true;
-        }
-    }
-    catch (Exception)
-    {
-        return false;
-    }
-}
-```
-
-**Capa de Negocio:**
-```csharp
-// Ref: GestionUsuarios_LogicaNegocio/PacienteNegocio.cs → método EliminarPacientePorID()
-public static bool EliminarPacientePorID(int id)
-{
-    return PacienteDatos.Eliminar(id);
+    return PacienteDatos.ActualizarPaciente(paciente);
 }
 ```
 
 ---
 
-## Caso 6: Cargar géneros en un ComboBox
+## Paso 3: Capa de Presentación
 
-### Problema
-Al abrir el formulario, el `ComboBox` de género debe llenarse con todos los géneros de la base de datos.
+Desde el formulario, se recopilan los nuevos datos ingresados por el usuario y se envían para actualizar el registro correspondiente.
 
-### Solución LINQ
-
-**Capa de Datos:**
 ```csharp
-// Ref: GestionUsuariosLinQ/GeneroDatos.cs → método DevolverListaGenero()
+PacienteEntidades paciente = new PacienteEntidades
+{
+    Id = Convert.ToInt32(txtId.Text),
+    Id_Genero = Convert.ToInt32(cmbGenero.SelectedValue),
+    Nombre = txtNombre.Text,
+    Apellido = txtApellido.Text,
+    Cedula = txtCedula.Text,
+    FechaNacimiento = dtpFechaNacimiento.Value,
+    Telefono = txtTelefono.Text,
+    Direccion = txtDireccion.Text,
+    Afiliado = chkAfiliado.Checked,
+    CodigoIESS = txtCodigoIESS.Text
+};
+
+PacienteNegocio.ActualizarPaciente(paciente);
+
+MessageBox.Show("Paciente actualizado correctamente.");
+```
+
+---
+
+## Resultado esperado
+
+Cuando el usuario modifique la información de un paciente y presione el botón de actualizar, los cambios serán almacenados en la base de datos y estarán disponibles la próxima vez que se consulte el registro.
+
+---
+
+## Conclusión
+
+La actualización de registros mediante LINQ to SQL se realiza de forma sencilla: primero se obtiene el objeto que se desea modificar, luego se actualizan sus propiedades y finalmente se ejecuta `SubmitChanges()` para guardar las modificaciones. Este proceso permite mantener sincronizada la información del sistema con la base de datos.
+
+
+# Caso 4: Actualizar la información de un paciente utilizando `FirstOrDefault()` y `SubmitChanges()`
+
+## Problema
+
+El sistema debe permitir editar los datos de un paciente existente cuando el usuario realice modificaciones desde el formulario.
+
+---
+
+## Paso 1: Capa de Datos
+
+La Capa de Datos busca el paciente que se desea actualizar utilizando su identificador. Una vez localizado, se modifican sus propiedades con los nuevos valores recibidos desde la Capa de Negocio y se guardan los cambios.
+
+```csharp
+public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
+{
+    using (ModePacienteDataContext contexto = new ModePacienteDataContext())
+    {
+        Paciente pacienteLinQ = contexto.Paciente
+                                        .FirstOrDefault(p => p.id == paciente.Id);
+
+        pacienteLinQ.id_Genero = paciente.Id_Genero;
+        pacienteLinQ.nombre = paciente.Nombre;
+        pacienteLinQ.apellido = paciente.Apellido;
+        pacienteLinQ.cedula = paciente.Cedula;
+        pacienteLinQ.fechaNacimiento = paciente.FechaNacimiento;
+        pacienteLinQ.telefono = paciente.Telefono;
+        pacienteLinQ.direccion = paciente.Direccion;
+        pacienteLinQ.afiliado = paciente.Afiliado;
+        pacienteLinQ.codigoIess = paciente.CodigoIESS;
+
+        contexto.SubmitChanges();
+
+        return paciente;
+    }
+}
+```
+
+### Aspectos importantes
+
+* `FirstOrDefault()` permite localizar el paciente que será modificado.
+* `pacienteLinQ` representa el registro obtenido directamente desde la base de datos.
+* `paciente` corresponde a la entidad utilizada por la arquitectura del sistema.
+* Los nuevos valores son transferidos desde `PacienteEntidades` hacia la entidad de LINQ to SQL.
+* `SubmitChanges()` guarda definitivamente las modificaciones realizadas.
+* El método devuelve la entidad actualizada.
+
+> **Importante:** Si el paciente no existe, `FirstOrDefault()` devolverá `null`, por lo que es recomendable validar el resultado antes de modificar sus propiedades.
+
+---
+
+## Paso 2: Capa de Negocio
+
+La Capa de Negocio expone el método de actualización para que pueda ser utilizado por la interfaz de usuario.
+
+```csharp
+public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
+{
+    return PacienteDatos.ActualizarPaciente(paciente);
+}
+```
+
+---
+
+## Paso 3: Capa de Presentación
+
+Desde el formulario, se recopilan los nuevos datos ingresados por el usuario y se envían para actualizar el registro correspondiente.
+
+```csharp
+PacienteEntidades paciente = new PacienteEntidades
+{
+    Id = Convert.ToInt32(txtId.Text),
+    Id_Genero = Convert.ToInt32(cmbGenero.SelectedValue),
+    Nombre = txtNombre.Text,
+    Apellido = txtApellido.Text,
+    Cedula = txtCedula.Text,
+    FechaNacimiento = dtpFechaNacimiento.Value,
+    Telefono = txtTelefono.Text,
+    Direccion = txtDireccion.Text,
+    Afiliado = chkAfiliado.Checked,
+    CodigoIESS = txtCodigoIESS.Text
+};
+
+PacienteNegocio.ActualizarPaciente(paciente);
+
+MessageBox.Show("Paciente actualizado correctamente.");
+```
+
+---
+
+## Resultado esperado
+
+Cuando el usuario modifique la información de un paciente y presione el botón de actualizar, los cambios serán almacenados en la base de datos y estarán disponibles la próxima vez que se consulte el registro.
+
+---
+
+## Conclusión
+
+La actualización de registros mediante LINQ to SQL se realiza de forma sencilla: primero se obtiene el objeto que se desea modificar, luego se actualizan sus propiedades y finalmente se ejecuta `SubmitChanges()` para guardar las modificaciones. Este proceso permite mantener sincronizada la información del sistema con la base de datos.
+
+
+# Caso 6: Cargar los géneros en un ComboBox
+
+## Problema
+
+El formulario de pacientes necesita mostrar en un `ComboBox` todos los géneros registrados en la base de datos, evitando que el usuario ingrese esta información manualmente.
+
+---
+
+## Paso 1: Capa de Datos
+
+La Capa de Datos obtiene todos los registros de la tabla `Genero` y los transforma en entidades del sistema para que puedan ser utilizadas por las demás capas.
+
+```csharp
 public static List<GeneroEntidades> DevolverListaGenero()
 {
-    List<GeneroEntidades> listaGeneroEntidades = new List<GeneroEntidades>();
-    List<Genero>          listaGenero          = new List<Genero>();
+    List<GeneroEntidades> listaGenero = new List<GeneroEntidades>();
+    List<Genero> listaGeneroLinQ = new List<Genero>();
 
     using (ModePacienteDataContext contexto = new ModePacienteDataContext())
     {
-        // LINQ to SQL: selecciona todos los géneros
-        var resultado = from g in contexto.Genero
-                        select g;
-
-        listaGenero = resultado.ToList();
+        listaGeneroLinQ = contexto.Genero.ToList();
     }
 
-    foreach (var item in listaGenero)
+    foreach (var item in listaGeneroLinQ)
     {
-        listaGeneroEntidades.Add(new GeneroEntidades(item.id, item.nombre));
+        listaGenero.Add(new GeneroEntidades(
+            item.id,
+            item.nombreGenero
+        ));
     }
 
-    return listaGeneroEntidades;
+    return listaGenero;
 }
 ```
 
-**Capa de Negocio:**
+### Aspectos importantes
+
+* `ToList()` recupera todos los géneros almacenados en la base de datos.
+* `listaGeneroLinQ` contiene los objetos generados por LINQ to SQL.
+* `listaGenero` almacena las entidades que serán utilizadas por el sistema.
+* El `foreach` permite convertir cada objeto `Genero` en un objeto `GeneroEntidades`.
+* Esta conversión mantiene la separación entre la base de datos y la arquitectura de la aplicación.
+
+---
+
+## Paso 2: Capa de Negocio
+
+La Capa de Negocio expone el método para que pueda ser utilizado desde la interfaz.
+
 ```csharp
-// Ref: GestionUsuarios_LogicaNegocio/GeneroNegocio.cs → método DevolverListasGeneros()
-public static List<GeneroEntidades> DevolverListasGeneros()
+public static List<GeneroEntidades> DevolverListaGenero()
 {
     return GeneroDatos.DevolverListaGenero();
 }
 ```
 
-**Capa de Presentación:**
+---
+
+## Paso 3: Capa de Presentación
+
+Desde el formulario, la lista obtenida se asigna al `ComboBox`.
+
 ```csharp
-// Ref: Presentacion/Form_Paciente.cs → método CargarGeneros()
-private void CargarGeneros()
-{
-    comboBox_Genero.DataSource    = GeneroNegocio.DevolverListasGeneros();
-    comboBox_Genero.DisplayMember = "Nombre";   // lo que ve el usuario
-    comboBox_Genero.ValueMember   = "Id";       // lo que se guarda
-}
+cmbGenero.DataSource = GeneroNegocio.DevolverListaGenero();
+cmbGenero.DisplayMember = "NombreGenero";
+cmbGenero.ValueMember = "Id";
 ```
 
+### Aspectos importantes
+
+* `DataSource` establece el origen de datos del `ComboBox`.
+* `DisplayMember` indica la propiedad que será mostrada al usuario.
+* `ValueMember` especifica el valor asociado a cada elemento seleccionado.
+* Gracias a esta configuración, el usuario visualiza el nombre del género, mientras que internamente el sistema trabaja con su identificador.
+
 ---
+
+## Resultado esperado
+
+El `ComboBox` mostrará automáticamente los géneros registrados en la base de datos.
+
+```text
+Masculino
+Femenino
+```
+
+Al seleccionar una opción, el sistema utilizará internamente el identificador correspondiente para realizar operaciones de inserción o actualización.
+
+---
+
+## Conclusión
+
+La carga de datos en controles como el `ComboBox` permite mejorar la experiencia del usuario, reducir errores de digitación y garantizar la integridad de la información almacenada. Además, este caso demuestra cómo LINQ to SQL puede integrarse fácilmente con los controles de Windows Forms mediante el uso de listas y el enlace de datos.
+
 
 ## Resumen: métodos LINQ usados en el proyecto
 
@@ -428,5 +653,4 @@ SQL Server — tablas: Paciente, Genero
 
 ---
 
-[← CRUD con LINQ](05-crud-linq.md) | [Siguiente: Referencias →](07-referencias.md)
 
