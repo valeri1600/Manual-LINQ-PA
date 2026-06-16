@@ -110,7 +110,7 @@ El operador `=>` sirve para indicar qué se hará con cada elemento de la colecc
 
 ## Operaciones Basicas de Consulta (Sintaxis de métodos)
 
-### ToList() — Convertir resultados en lista
+## ToList() — Convertir resultados en lista
 
 ### ¿Qué es?
 
@@ -123,7 +123,7 @@ var lista = contexto.Dados.ToList();
 ```
 `ToList()` → ejecuta la consulta y convierte los registros en una lista de objetos (List < Dados >).
 
-### Where — Filtrar registros
+## Where — Filtrar registros
 
 **¿Qué es?**
 
@@ -144,7 +144,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-### Select — Proyectar (seleccionar campos específicos)
+## Select — Proyectar (seleccionar campos específicos)
 
 **¿Qué es?**
 
@@ -165,7 +165,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-### OrderBy y OrderByDescending — Ordenar
+## OrderBy y OrderByDescending — Ordenar
 
 **¿Qué es?**
 
@@ -186,7 +186,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-### FirstOrDefault — Obtener un solo registro
+## FirstOrDefault — Obtener un solo registro
 
 **¿Qué es?**
 
@@ -215,7 +215,7 @@ if (lanzamiento == null)
 
 ---
 
-### Any — Verificar si existe algún registro
+## Any — Verificar si existe algún registro
 
 **¿Qué es?**
 
@@ -235,7 +235,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-### Take — Obtener una cantidad específica de registros
+## Take — Obtener una cantidad específica de registros
 
 **¿Qué es?**
 
@@ -256,7 +256,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-### Skip — Omitir registros
+## Skip — Omitir registros
 ¿Qué es?  
 Permite saltar una cantidad de registros antes de devolver resultados.
 
@@ -275,7 +275,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-### Distinct — Eliminar elementos repetidos
+## Distinct — Eliminar elementos repetidos
 
 **¿Qué es?**
 
@@ -297,7 +297,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-### Combinando operadores
+## Combinando operadores
 LINQ permite combinar varios operadores para obtener resultados más específicos.
 
 **Ejemplo:**
@@ -418,3 +418,29 @@ var lista =
     .Distinct();
 ```
 ---
+## Ejemplo combinado de operadores LINQ
+
+Obtener los lanzamientos de dados cuyo puntaje sea mayor a 0, ordenarlos de forma descendente según el puntaje y mostrar únicamente el puntaje, la suma y el promedio de cada registro.
+
+---
+
+### SQL equivalente:
+```sql
+SELECT puntaje, suma, promedio
+FROM Dados
+WHERE puntaje > 0
+ORDER BY puntaje DESC;
+```
+
+```csharp
+var lista =
+    from d in contexto.Dados
+    where d.puntaje > 0
+    orderby d.puntaje descending
+    select new
+    {
+        d.puntaje,
+        d.suma,
+        d.promedio
+    };
+```
