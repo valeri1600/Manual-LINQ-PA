@@ -1,5 +1,5 @@
 # 3. Consultas con LINQ
-Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando **LINQ to SQL** en la **Capa de Datos**.
+Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando LINQ  en la **Capa de Datos**.
 
 ---
 
@@ -144,7 +144,7 @@ El operador `=>` sirve para indicar qué se hará con cada elemento de la colecc
 
 ### ToList() — Convertir resultados en lista
 
-***¿Qué es?***
+**¿Qué es?**
 
 Permite ejecutar una consulta LINQ y convertir el resultado en una lista (List), lo que facilita trabajar con los datos dentro de la aplicación.
 
