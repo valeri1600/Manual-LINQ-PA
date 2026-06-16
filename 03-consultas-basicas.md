@@ -1,4 +1,4 @@
-# 3. Consultas Básicas con LINQ
+# Consultas Básicas con LINQ
 
 Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando la arquitectura de 4 capas.
 
