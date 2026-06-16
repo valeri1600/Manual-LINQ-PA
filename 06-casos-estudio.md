@@ -77,7 +77,7 @@ public static List<PacienteEntidades> DevolverListaPaciente()
 * El `foreach` permite transformar cada objeto `Paciente` en un objeto `PacienteEntidades`.
 * El nombre del género se obtiene mediante el método `GeneroDatos.DevolverNombreGeneroPorId()`, ya que en la tabla `Paciente` únicamente se almacena el identificador del género.
 
-> **Importante:** El `foreach` actúa como un puente entre la entidad generada por LINQ to SQL y la entidad utilizada por la arquitectura del sistema, manteniendo separadas las responsabilidades de cada capa.
+**Importante:** El `foreach` actúa como un puente entre la entidad generada por LINQ to SQL y la entidad utilizada por la arquitectura del sistema, manteniendo separadas las responsabilidades de cada capa.
 
 ---
 
@@ -119,7 +119,8 @@ private void CargarListaPacientes()
 
 ## Conclusión
 
-Este caso demuestra cómo LINQ to SQL permite recuperar información desde la base de datos y adaptarla a la arquitectura del sistema mediante entidades propias. Además, evidencia la importancia de separar las entidades generadas por LINQ to SQL de las entidades utilizadas por la aplicación, favoreciendo un código más organizado y fácil de mantener.
+Este caso evidencia cómo LINQ  permite obtener información de la base de datos de forma organizada, favoreciendo una mejor estructura del sistema.
+
 
 # Caso 2: Buscar un paciente por ID utilizando `FirstOrDefault()`
 
@@ -131,7 +132,7 @@ Cuando el usuario selecciona un paciente desde el `DataGridView`, el sistema deb
 
 ## Paso 1: Capa de Datos
 
-La Capa de Datos utiliza `FirstOrDefault()` para localizar el primer paciente que coincida con el valor recibido como parámetro. Posteriormente, los datos obtenidos desde LINQ to SQL son convertidos a una entidad del sistema.
+La Capa de Datos utiliza `FirstOrDefault()` para localizar el primer paciente que coincida con el valor recibido como parámetro. Posteriormente, los datos obtenidos desde LINQ  son convertidos a una entidad del sistema.
 
 ```csharp
 public static PacienteEntidades CargarPacientePorId(int id)
@@ -167,7 +168,7 @@ public static PacienteEntidades CargarPacientePorId(int id)
 * `paciente` corresponde a la entidad utilizada por la arquitectura del sistema.
 * Los datos son transferidos desde `pacienteLinQ` hacia `PacienteEntidades` para mantener la separación entre capas.
 
-> **Importante:** Si no existe un paciente con el identificador solicitado, `FirstOrDefault()` devolverá `null`. Es recomendable verificar el resultado antes de acceder a sus propiedades.
+**Importante:** Si no existe un paciente con el identificador solicitado, `FirstOrDefault()` devolverá `null`. Es recomendable verificar el resultado antes de acceder a sus propiedades.
 
 ---
 
@@ -208,7 +209,8 @@ Si el usuario selecciona el paciente con identificador `1`, el sistema recuperar
 
 ## Conclusión
 
-El método `FirstOrDefault()` es una de las funciones más utilizadas en LINQ, ya que permite recuperar un único registro a partir de una condición específica. En este caso, facilita la búsqueda de un paciente por su identificador, permitiendo cargar rápidamente su información para realizar procesos de consulta o actualización.
+`FirstOrDefault()` facilita la búsqueda de un registro específico, permitiendo consultar o actualizar su información de forma rápida y eficiente.
+
 
 
 # Caso 3: Registrar un nuevo paciente utilizando `InsertOnSubmit()` y `SubmitChanges()`
@@ -221,7 +223,7 @@ El sistema debe registrar un nuevo paciente con toda la información proporciona
 
 ## Paso 1: Capa de Datos
 
-La Capa de Datos recibe un objeto `PacienteEntidades`, crea una entidad `Paciente` generada por LINQ to SQL, copia la información correspondiente y posteriormente realiza la inserción en la base de datos.
+La Capa de Datos recibe un objeto `PacienteEntidades`, crea una entidad `Paciente` generada por LINQ , copia la información correspondiente y posteriormente realiza la inserción en la base de datos.
 
 ```csharp
 public static PacienteEntidades InsertarPaciente(PacienteEntidades paciente)
@@ -253,14 +255,14 @@ public static PacienteEntidades InsertarPaciente(PacienteEntidades paciente)
 ### Aspectos importantes
 
 * `paciente` es un objeto de tipo `PacienteEntidades`, perteneciente a la Capa de Entidades.
-* `pacienteLinQ` representa la entidad `Paciente` generada por LINQ to SQL y asociada a la tabla real de la base de datos.
+* `pacienteLinQ` representa la entidad `Paciente` generada por LINQ  y asociada a la tabla real de la base de datos.
 * Los datos ingresados son transferidos desde `PacienteEntidades` hacia `Paciente`.
 * `InsertOnSubmit()` registra el nuevo objeto para su inserción.
 * `SubmitChanges()` ejecuta la operación y guarda el registro en SQL Server.
 * El identificador generado automáticamente por la base de datos es recuperado y asignado nuevamente a la entidad.
 * Finalmente, se devuelve el objeto con toda su información actualizada.
 
-> **Importante:** Si se utiliza `InsertOnSubmit()` sin ejecutar `SubmitChanges()`, el registro no será almacenado en la base de datos.
+**Importante:** Si se utiliza `InsertOnSubmit()` sin ejecutar `SubmitChanges()`, el registro no será almacenado en la base de datos.
 
 ---
 
@@ -310,7 +312,7 @@ Al completar el formulario y presionar el botón de guardar, el nuevo paciente s
 
 ## Conclusión
 
-La operación de inserción demuestra cómo LINQ to SQL facilita el registro de nuevos datos mediante los métodos `InsertOnSubmit()` y `SubmitChanges()`. Además, evidencia la comunicación entre las diferentes capas de la aplicación, manteniendo separada la lógica del negocio del acceso directo a la base de datos.
+`InsertOnSubmit()` prepara el nuevo registro para ser insertado y `SubmitChanges()` confirma la operación en la base de datos, simplificando el proceso de inserción mediante LINQ .
 
 # Caso 4: Actualizar la información de un paciente utilizando `FirstOrDefault()` y `SubmitChanges()`
 
@@ -358,7 +360,7 @@ public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
 * `SubmitChanges()` guarda definitivamente las modificaciones realizadas.
 * El método devuelve la entidad actualizada.
 
-> **Importante:** Si el paciente no existe, `FirstOrDefault()` devolverá `null`, por lo que es recomendable validar el resultado antes de modificar sus propiedades.
+**Importante:** Si el paciente no existe, `FirstOrDefault()` devolverá `null`, por lo que es recomendable validar el resultado antes de modificar sus propiedades.
 
 ---
 
@@ -409,67 +411,57 @@ Cuando el usuario modifique la información de un paciente y presione el botón 
 
 ## Conclusión
 
-La actualización de registros mediante LINQ to SQL se realiza de forma sencilla: primero se obtiene el objeto que se desea modificar, luego se actualizan sus propiedades y finalmente se ejecuta `SubmitChanges()` para guardar las modificaciones. Este proceso permite mantener sincronizada la información del sistema con la base de datos.
+L`SubmitChanges()` permite guardar en la base de datos las modificaciones realizadas sobre un registro previamente identificado, simplificando el proceso de actualización mediante LINQ .
 
-
-# Caso 4: Actualizar la información de un paciente utilizando `FirstOrDefault()` y `SubmitChanges()`
+# Caso 5: Eliminar un paciente utilizando `DeleteOnSubmit()` y `SubmitChanges()`
 
 ## Problema
 
-El sistema debe permitir editar los datos de un paciente existente cuando el usuario realice modificaciones desde el formulario.
+El sistema debe permitir eliminar un paciente seleccionado por el usuario desde la interfaz. Una vez confirmada la operación, el registro debe desaparecer de la base de datos.
 
 ---
 
 ## Paso 1: Capa de Datos
 
-La Capa de Datos busca el paciente que se desea actualizar utilizando su identificador. Una vez localizado, se modifican sus propiedades con los nuevos valores recibidos desde la Capa de Negocio y se guardan los cambios.
+La Capa de Datos recibe la entidad del paciente que se desea eliminar. Mediante LINQ to SQL, se busca el registro correspondiente utilizando su identificador. Una vez encontrado, se marca para su eliminación y finalmente se ejecutan los cambios.
 
 ```csharp
-public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
+public static bool EliminarPaciente(PacienteEntidades paciente)
 {
     using (ModePacienteDataContext contexto = new ModePacienteDataContext())
     {
         Paciente pacienteLinQ = contexto.Paciente
                                         .FirstOrDefault(p => p.id == paciente.Id);
 
-        pacienteLinQ.id_Genero = paciente.Id_Genero;
-        pacienteLinQ.nombre = paciente.Nombre;
-        pacienteLinQ.apellido = paciente.Apellido;
-        pacienteLinQ.cedula = paciente.Cedula;
-        pacienteLinQ.fechaNacimiento = paciente.FechaNacimiento;
-        pacienteLinQ.telefono = paciente.Telefono;
-        pacienteLinQ.direccion = paciente.Direccion;
-        pacienteLinQ.afiliado = paciente.Afiliado;
-        pacienteLinQ.codigoIess = paciente.CodigoIESS;
-
+        contexto.Paciente.DeleteOnSubmit(pacienteLinQ);
         contexto.SubmitChanges();
 
-        return paciente;
+        return true;
     }
 }
 ```
 
 ### Aspectos importantes
 
-* `FirstOrDefault()` permite localizar el paciente que será modificado.
-* `pacienteLinQ` representa el registro obtenido directamente desde la base de datos.
 * `paciente` corresponde a la entidad utilizada por la arquitectura del sistema.
-* Los nuevos valores son transferidos desde `PacienteEntidades` hacia la entidad de LINQ to SQL.
-* `SubmitChanges()` guarda definitivamente las modificaciones realizadas.
-* El método devuelve la entidad actualizada.
+* `pacienteLinQ` representa el registro obtenido directamente desde la base de datos.
+* `FirstOrDefault()` permite localizar el paciente que será eliminado.
+* `DeleteOnSubmit()` marca el objeto para su eliminación.
+* `SubmitChanges()` ejecuta la operación y elimina definitivamente el registro en SQL Server.
+* El método devuelve `true` para indicar que la eliminación se realizó correctamente.
 
-> **Importante:** Si el paciente no existe, `FirstOrDefault()` devolverá `null`, por lo que es recomendable validar el resultado antes de modificar sus propiedades.
+**Importante:** Si el registro no existe, `FirstOrDefault()` devolverá `null`, por lo que es recomendable validar el resultado antes de ejecutar la eliminación.
 
 ---
 
 ## Paso 2: Capa de Negocio
 
-La Capa de Negocio expone el método de actualización para que pueda ser utilizado por la interfaz de usuario.
+La Capa de Negocio actúa como intermediaria entre la interfaz y la Capa de Datos.
 
 ```csharp
-public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
+public static bool EliminarPaciente(PacienteEntidades paciente)
 {
-    return PacienteDatos.ActualizarPaciente(paciente);
+    return PacienteDatos.EliminarPaciente(paciente);
 }
 ```
 
@@ -477,39 +469,34 @@ public static PacienteEntidades ActualizarPaciente(PacienteEntidades paciente)
 
 ## Paso 3: Capa de Presentación
 
-Desde el formulario, se recopilan los nuevos datos ingresados por el usuario y se envían para actualizar el registro correspondiente.
+Desde el formulario, se obtiene el identificador del paciente seleccionado y se envía la solicitud de eliminación.
 
 ```csharp
 PacienteEntidades paciente = new PacienteEntidades
 {
-    Id = Convert.ToInt32(txtId.Text),
-    Id_Genero = Convert.ToInt32(cmbGenero.SelectedValue),
-    Nombre = txtNombre.Text,
-    Apellido = txtApellido.Text,
-    Cedula = txtCedula.Text,
-    FechaNacimiento = dtpFechaNacimiento.Value,
-    Telefono = txtTelefono.Text,
-    Direccion = txtDireccion.Text,
-    Afiliado = chkAfiliado.Checked,
-    CodigoIESS = txtCodigoIESS.Text
+    Id = Convert.ToInt32(txtId.Text)
 };
 
-PacienteNegocio.ActualizarPaciente(paciente);
+bool eliminado = PacienteNegocio.EliminarPaciente(paciente);
 
-MessageBox.Show("Paciente actualizado correctamente.");
+if (eliminado)
+{
+    MessageBox.Show("Paciente eliminado correctamente.");
+}
 ```
 
 ---
 
 ## Resultado esperado
 
-Cuando el usuario modifique la información de un paciente y presione el botón de actualizar, los cambios serán almacenados en la base de datos y estarán disponibles la próxima vez que se consulte el registro.
+Después de confirmar la eliminación, el paciente dejará de existir en la base de datos y ya no aparecerá en el listado mostrado por el sistema.
 
 ---
 
 ## Conclusión
 
-La actualización de registros mediante LINQ to SQL se realiza de forma sencilla: primero se obtiene el objeto que se desea modificar, luego se actualizan sus propiedades y finalmente se ejecuta `SubmitChanges()` para guardar las modificaciones. Este proceso permite mantener sincronizada la información del sistema con la base de datos.
+`DeleteOnSubmit()` permite marcar un registro para su eliminación y `SubmitChanges()` ejecuta la operación en la base de datos, facilitando la eliminación de información mediante LINQ to SQL.
+
 
 
 # Caso 6: Cargar los géneros en un ComboBox
@@ -604,7 +591,7 @@ Al seleccionar una opción, el sistema utilizará internamente el identificador 
 
 ## Conclusión
 
-La carga de datos en controles como el `ComboBox` permite mejorar la experiencia del usuario, reducir errores de digitación y garantizar la integridad de la información almacenada. Además, este caso demuestra cómo LINQ to SQL puede integrarse fácilmente con los controles de Windows Forms mediante el uso de listas y el enlace de datos.
+Este proceso facilita la carga de información en controles como el `ComboBox`, mejorando la interacción del usuario y reduciendo errores en el ingreso de datos.
 
 
 ## Resumen: métodos LINQ usados en el proyecto
