@@ -1,6 +1,5 @@
 # Consultas Básicas con LINQ
-
-Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando la arquitectura de 4 capas.
+Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando **LINQ to SQL** en la **Capa de Datos**.
 
 ---
 
@@ -15,9 +14,12 @@ Permite obtener únicamente los elementos que cumplen una condición determinada
 Obtener los lanzamientos donde ambos dados tuvieron el mismo valor.
 
 ```csharp
-var iguales = Dado_Logica.ListarDados()
-                         .Where(d => d.valoresIguales)
-                         .ToList();
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var iguales = contexto.Dados
+                           .Where(d => d.valoresIguales)
+                           .ToList();
+}
 ```
 
 ---
@@ -33,9 +35,12 @@ Permite seleccionar únicamente la información que se necesita de cada registro
 Obtener solamente los puntajes registrados.
 
 ```csharp
-var puntajes = Dado_Logica.ListarDados()
-                          .Select(d => d.puntaje)
-                          .ToList();
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var puntajes = contexto.Dados
+                           .Select(d => d.puntaje)
+                           .ToList();
+}
 ```
 
 ---
@@ -51,9 +56,12 @@ Permiten ordenar la información de forma ascendente o descendente.
 Obtener los lanzamientos ordenados de mayor a menor puntaje.
 
 ```csharp
-var ordenados = Dado_Logica.ListarDados()
-                           .OrderByDescending(d => d.puntaje)
-                           .ToList();
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var ordenados = contexto.Dados
+                            .OrderByDescending(d => d.puntaje)
+                            .ToList();
+}
 ```
 
 ---
@@ -69,8 +77,11 @@ Devuelve el primer elemento que cumple una condición. Si no existe, retorna `nu
 Obtener el primer lanzamiento con puntaje de 5.
 
 ```csharp
-var lanzamiento = Dado_Logica.ListarDados()
-                             .FirstOrDefault(d => d.puntaje == 5);
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var lanzamiento = contexto.Dados
+                              .FirstOrDefault(d => d.puntaje == 5);
+}
 ```
 
 > **Importante:** Antes de utilizar el resultado, se debe verificar que no sea `null`.
@@ -95,8 +106,11 @@ Permite comprobar si existe al menos un elemento que cumpla una condición.
 Verificar si existe algún lanzamiento con dados iguales.
 
 ```csharp
-bool existe = Dado_Logica.ListarDados()
-                         .Any(d => d.valoresIguales);
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    bool existe = contexto.Dados
+                           .Any(d => d.valoresIguales);
+}
 ```
 
 ---
@@ -112,9 +126,12 @@ Permite seleccionar un número determinado de elementos.
 Obtener los cinco primeros lanzamientos registrados.
 
 ```csharp
-var primerosCinco = Dado_Logica.ListarDados()
-                               .Take(5)
-                               .ToList();
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var primerosCinco = contexto.Dados
+                                .Take(5)
+                                .ToList();
+}
 ```
 
 ---
@@ -130,10 +147,13 @@ Permite obtener únicamente valores únicos, eliminando duplicados.
 Obtener los puntajes diferentes obtenidos durante los lanzamientos.
 
 ```csharp
-var puntajesUnicos = Dado_Logica.ListarDados()
-                                .Select(d => d.puntaje)
-                                .Distinct()
-                                .ToList();
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var puntajesUnicos = contexto.Dados
+                                 .Select(d => d.puntaje)
+                                 .Distinct()
+                                 .ToList();
+}
 ```
 
 ---
@@ -149,11 +169,14 @@ LINQ permite combinar varios operadores para obtener resultados más específico
 Obtener los cinco lanzamientos con puntaje mayor a cero, ordenados de mayor a menor.
 
 ```csharp
-var mejores = Dado_Logica.ListarDados()
-                         .Where(d => d.puntaje > 0)
-                         .OrderByDescending(d => d.puntaje)
-                         .Take(5)
-                         .ToList();
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var mejores = contexto.Dados
+                           .Where(d => d.puntaje > 0)
+                           .OrderByDescending(d => d.puntaje)
+                           .Take(5)
+                           .ToList();
+}
 ```
 
 ---
