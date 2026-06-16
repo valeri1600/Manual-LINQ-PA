@@ -72,10 +72,10 @@ Se utiliza para definir la estructura de los datos que manejará la aplicación 
 
 Cuando el usuario realiza una acción en la interfaz, la información pasa por las diferentes capas del sistema de la siguiente manera:
 
-La Capa de Presentación recibe la acción del usuario.
-La Capa de Negocio valida y procesa la información.
-La Capa de Datos se encarga de almacenar o consultar la información en la base de datos.
-La respuesta retorna nuevamente a la interfaz para ser mostrada al usuario.
+* La Capa de Presentación recibe la acción del usuario.
+* La Capa de Negocio valida y procesa la información.
+* La Capa de Datos se encarga de almacenar o consultar la información en la base de datos.
+* La respuesta retorna nuevamente a la interfaz para ser mostrada al usuario.
 
 Este flujo garantiza una separación clara de responsabilidades y mejora la organización del sistema.
 
