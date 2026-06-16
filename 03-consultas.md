@@ -16,7 +16,7 @@ var resultado =
     where d.puntaje > 0
     select d;
 ```
-## Sintaxis de métodos (Lambda)
+### Sintaxis de métodos (Lambda)
 La sintaxis que utilizaremos en este proyecto es la sintaxis de métodos (lambda), ya que es más práctica, flexible y se usa con mayor frecuencia en aplicaciones reales.
 
 ```csharp
