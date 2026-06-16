@@ -247,12 +247,16 @@ using (DadosDataContext contexto = new DadosDataContext())
 ¿Qué es?  
 Permite saltar una cantidad de registros antes de devolver resultados.
 
+**Ejemplo:**  
+Omitir los primeros 5 lanzamientos y mostrar el resto.
+
 ```csharp
 using (DadosDataContext contexto = new DadosDataContext())
 {
-    var resultados = contexto.Dados
-                             .Skip(5)
-                             .ToList();
+    var lanzamientos = contexto.Dados
+                               .OrderBy(d => d.id)
+                               .Skip(5)
+                               .ToList();
 }
 ```
 
