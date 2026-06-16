@@ -243,6 +243,21 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
+## Skip — Omitir registros
+¿Qué es?  
+Permite saltar una cantidad de registros antes de devolver resultados.
+
+```csharp
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var resultados = contexto.Dados
+                             .Skip(5)
+                             .ToList();
+}
+```
+
+---
+
 ## Distinct — Eliminar elementos repetidos
 
 **¿Qué es?**
