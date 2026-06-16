@@ -97,7 +97,8 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 El operador GroupBy permite agrupar registros que comparten un mismo valor en una propiedad, y luego aplicar funciones de agregado como Count, Sum, Average, etc.
 
-Agrupar por puntaje
+Agrupar por puntaje:
+
 ```csharp
 using (DadosDataContext contexto = new DadosDataContext())
 {
@@ -107,7 +108,23 @@ using (DadosDataContext contexto = new DadosDataContext())
 }
 ```
 
+ **Importante:** Antes de GroupBy, la variable representa un registro individual:
+
+```csharp
+.Where(d => d.puntaje > 0)
+```
+
+Aquí, `d` es cada elemento de la tabla `Dados`.
+
+Sin embargo, después de GroupBy, ya no se trabaja con registros individuales, sino con grupos:
+
+```csharp
+.Select(g => g.Key)
+```
+
+En este caso, `g` representa cada grupo formado por los registros que tienen el mismo puntaje.
 ---
+
 ## Funciones de Agregado con condición
 
 Ejemplo combinado: obtener estadísticas solo de los lanzamientos con puntaje mayor a 0.
@@ -115,6 +132,7 @@ Ejemplo combinado: obtener estadísticas solo de los lanzamientos con puntaje ma
 ```csharp
 using (DadosDataContext contexto = new DadosDataContext())
 {
+
     int total = contexto.Dados.Count(d => d.puntaje > 0);
 
     int suma = contexto.Dados
@@ -189,8 +207,14 @@ int minimo =
      select d.puntaje).Min();
 ```
 
----
+### Min
 
+```csharp
+var grupos =
+    (from d in contexto.Dados
+     group d by d.puntaje)
+    .ToList();
+```
 ---
 ## Equivalencia SQL y LINQ
 
@@ -222,7 +246,43 @@ using (DadosDataContext contexto = new DadosDataContext())
 }
 ```
 
+### Con Group By
+Hasta ahora, las funciones de agregado se aplicaban sobre todos los registros obtenidos en la consulta. Sin embargo, al utilizar GroupBy, los datos primero se organizan en grupos según una característica en común. De esta manera, los cálculos ya no se realizan sobre cada registro individual, sino sobre cada grupo formado.
 
+Por ejemplo, si se agrupa por puntaje, todos los lanzamientos con el mismo puntaje quedarán dentro del mismo grupo, permitiendo obtener estadísticas independientes para cada uno de ellos.
+
+**SQL equivalente:**
+```sql
+SELECT
+    COUNT(*)      AS Total,
+    SUM(puntaje)  AS Suma,
+    AVG(puntaje)  AS Promedio,
+    MAX(puntaje)  AS Maximo,
+    MIN(puntaje)  AS Minimo
+FROM Dados
+WHERE puntaje > 0
+GROUP BY puntaje;
+```
+
+**LINQ equivalente:**
+```csharp
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var resultado = contexto.Dados
+                            .Where(d => d.puntaje > 0)
+                            .GroupBy(d => d.puntaje)
+                            .Select(g => new
+                            {
+                                Puntaje = g.Key,
+                                Total = g.Count(),
+                                Suma = g.Sum(x => x.puntaje),
+                                Promedio = g.Average(x => x.puntaje),
+                                Maximo = g.Max(x => x.puntaje),
+                                Minimo = g.Min(x => x.puntaje)
+                            })
+                            .ToList();
+}
+```
 ---
 
 ## Tabla de referencia rápida
@@ -235,6 +295,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 | `.Average(x => x.Campo)` | Promedio | `double` | `AVG()` |
 | `.Max(x => x.Campo)` | Valor más alto | tipo del campo | `MAX()` |
 | `.Min(x => x.Campo)` | Valor más bajo | tipo del campo | `MIN()` |
+| `.GroupBy(x => x.Campo)` | Agrupa los elementos por una clave | `IGrouping` | `GROUP BY` |
 
 ---
 
