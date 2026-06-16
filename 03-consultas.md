@@ -81,6 +81,8 @@ Se interpreta como:  "Para cada lanzamiento `d`, utilizar el campo `suma` para o
 
 El operador `=>` sirve para indicar qué se hará con cada elemento de la colección.
 
+##                             Operaciones Basicas de Consulta
+
 ## Where — Filtrar registros
 
 **¿Qué es?**
