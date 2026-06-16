@@ -20,38 +20,6 @@ Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además
 <p align="justify">
 LINQ se utiliza en una arquitectura por capas porque facilita la consulta y manipulación de datos de una manera clara y ordenada, respetando la responsabilidad de cada capa. Permite filtrar, ordenar, agrupar y transformar información con menos código, lo que mejora el mantenimiento y la reutilización del sistema, evitando mezclar la lógica del negocio con el acceso a los datos.
 
-Con LINQ hace el código más **legible**, **mantenible** y **seguro** (evita errores de iteración manual).
-
-```csharp
-// Capa de Datos 
-return context.Tutorias
-              .Where(t => t.EstudianteId == id && t.Activa == true)
-              .ToList();
-```
-</p>
-
-***Sintaxis de consulta***
-```csharp
-var resultado = (from x in lista
-                 where x.Activo == true
-                 orderby x.Nombre
-                 select x).ToList();
-```
-
-## Operadores más usados
-
-| Operador | Propósito | Ejemplo |
-|----------|-----------|---------|
-| `Where` | Filtrar | `.Where(x => x.Edad > 18)` |
-| `Select` | Proyectar/transformar | `.Select(x => x.Nombre)` |
-| `OrderBy` / `OrderByDescending` | Ordenar | `.OrderBy(x => x.Fecha)` |
-| `FirstOrDefault` | Primer elemento o null | `.FirstOrDefault(x => x.Id == id)` |
-| `ToList` | Ejecutar y materializar | `.ToList()` |
-| `Count` | Contar elementos | `.Count(x => x.Activo)` |
-| `Any` | Verificar existencia | `.Any(x => x.Nombre == "Ana")` |
-
----
-
 ## Diagrama del Modelo de 4 capas y LINQ
 Cada capa cumple con una funcion en especifico:
 * ***Capa de Presentación*** (La interfaz de usuario: la pantalla).
@@ -71,3 +39,53 @@ Cada capa cumple con una funcion en especifico:
 * Disminuye la probabilidad de errores al manipular colecciones.
 * Facilita la separación de responsabilidades entre las capas.
 
+# Sintaxis de una consulta LINQ
+
+La sintaxis de una consulta LINQ puede escribirse de dos formas principales: **sintaxis de consulta (similar a SQL)** y **sintaxis de métodos (lambda)**.
+
+##  1. Sintaxis de consulta (Query Syntax)
+
+Es la forma más parecida a SQL.
+
+```csharp
+var resultado =
+    from d in listaDados
+    where d.puntaje > 0
+    select d;
+```
+
+ **Estructura básica:**
+
+```csharp
+from variable in origen
+where condición
+select resultado
+```
+
+---
+
+## 2. Sintaxis de métodos (Method Syntax)
+
+Es la más usada en proyectos reales.
+
+```csharp
+var resultado = listaDados
+                .Where(d => d.puntaje > 0)
+                .ToList();
+```
+
+---
+
+## Operadores más usados
+
+| Operador | Propósito | Ejemplo |
+|----------|-----------|---------|
+| `Where` | Filtrar | `.Where(x => x.Edad > 18)` |
+| `Select` | Proyectar/transformar | `.Select(x => x.Nombre)` |
+| `OrderBy` / `OrderByDescending` | Ordenar | `.OrderBy(x => x.Fecha)` |
+| `FirstOrDefault` | Primer elemento o null | `.FirstOrDefault(x => x.Id == id)` |
+| `ToList` | Ejecutar y materializar | `.ToList()` |
+| `Count` | Contar elementos | `.Count(x => x.Activo)` |
+| `Any` | Verificar existencia | `.Any(x => x.Nombre == "Ana")` |
+
+---
