@@ -207,7 +207,7 @@ int minimo =
      select d.puntaje).Min();
 ```
 
-### Min
+### Group By 
 
 ```csharp
 var grupos =
