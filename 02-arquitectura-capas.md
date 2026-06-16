@@ -27,7 +27,7 @@ Se utiliza para recibir la información que ingresa el usuario y mostrarle los r
 
 Es la capa que contiene la lógica del sistema y las reglas que determinan cómo debe funcionar la aplicación. Se considera el cerebro del programa.
 
-Se utiliza para procesar la información recibida desde la interfaz, validar datos y tomar decisiones antes de enviarlos a la base de datos o devolver resultados al usuario.
+En esta capa se definen las reglas del sistema. Aquí se validan los datos recibidos, se realizan cálculos y se determina cómo debe comportarse la aplicación antes de interactuar con la base de datos.
 
 ## Funciones
 * Aplicar reglas del negocio.
@@ -44,6 +44,8 @@ Se utiliza para procesar la información recibida desde la interfaz, validar dat
 Es la capa encargada de la comunicación directa con la base de datos. Gestiona todas las operaciones relacionadas con el almacenamiento y recuperación de información.
 
 Se utiliza para ejecutar consultas y modificaciones en la base de datos sin que las demás capas conozcan cómo se realizan internamente.
+
+En la Capa de Datos se establece la conexión con SQL Server o mediante LINQ to SQL utilizando el DataContext.
 
 ### Funciones
 
