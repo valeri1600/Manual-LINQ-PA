@@ -93,10 +93,24 @@ using (DadosDataContext contexto = new DadosDataContext())
 ```
 
 ---
+### GROUP BY — Agrupar por
 
+El operador GroupBy permite agrupar registros que comparten un mismo valor en una propiedad, y luego aplicar funciones de agregado como Count, Sum, Average, etc.
+
+Agrupar por puntaje
+```csharp
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var grupos = contexto.Dados
+                         .GroupBy(d => d.puntaje)
+                         .ToList();
+}
+```
+
+---
 ## Funciones de Agregado con condición
 
-Ejemplo combinado: obtener estadísticas **solo de los lanzamientos con puntaje mayor a 0**.
+Ejemplo combinado: obtener estadísticas solo de los lanzamientos con puntaje mayor a 0.
 
 ```csharp
 using (DadosDataContext contexto = new DadosDataContext())
@@ -125,7 +139,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ## Sintaxis de Consulta
 
-En sintaxis de consulta (estilo SQL), las funciones de agregado se encadenan **después** de la expresión `select`.
+En sintaxis de consulta (estilo SQL), las funciones de agregado se encadenan después de la expresión `select`.
 
 ### Count
 
@@ -177,6 +191,7 @@ int minimo =
 
 ---
 
+---
 ## Equivalencia SQL y LINQ
 
 Una de las ventajas de LINQ es que reproduce exactamente lo que haría SQL, pero en C#.
