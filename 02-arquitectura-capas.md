@@ -88,6 +88,7 @@ Después de crear los proyectos, es necesario agregar las referencias entre las 
 <p align="center">
   <img src="./assets/imagenes/capas.png" alt="Concepto de LINQ y Capas" width="300">
 </p>
+
 ## Conexión a la Base de Datos mediante LINQ to SQL
 
 Para establecer la conexión con la base de datos, es necesario contar previamente con una base de datos creada en SQL Server 2022 y con las tablas que almacenarán la información del sistema. Estas tablas permitirán realizar operaciones como insertar, consultar, modificar y eliminar registros.
@@ -95,7 +96,7 @@ Para establecer la conexión con la base de datos, es necesario contar previamen
 Sin embargo, para evitar escribir manualmente las consultas SQL en C#, se puede utilizar **LINQ to SQL**, una tecnología que genera una clase de conexión denominada `DataContext`. Esta clase permite interactuar directamente con las tablas de la base de datos como si fueran objetos del programa, facilitando la realización de operaciones CRUD (Crear, Leer, Actualizar y Eliminar) mediante código C#, sin necesidad de escribir instrucciones SQL de forma explícita.
 
 <p align="center">
-  <img src="./assets/imagenes/SQL.png" alt="Concepto de LINQ y Capas" width="300">
+  <img src="./assets/imagenes/SQL.png" alt="Concepto de LINQ y Capas" width="400">
 </p>
 
 ## Aplicación del modelo de 4 capas
