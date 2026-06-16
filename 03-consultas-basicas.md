@@ -21,27 +21,6 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 Esta estructura sirve como base para la mayoría de las consultas realizadas con LINQ.
 
-## Where — Filtrar registros
-
-**¿Qué es?**
-
-Permite obtener únicamente los elementos que cumplen una condición determinada.
-
-**Ejemplo:**
-
-Obtener los lanzamientos donde ambos dados tuvieron el mismo valor.
-
-```csharp
-using (DadosDataContext contexto = new DadosDataContext())
-{
-    var iguales = contexto.Dados
-                           .Where(d => d.valoresIguales)
-                           .ToList();
-}
-```
-
----
-
 ## ¿Qué significa `=>` en las consultas LINQ?
 
 Al comenzar a trabajar con LINQ, uno de los símbolos mas importante es `=>`. Este operador se conoce como **operador lambda** y se utiliza para indicar la condición o la acción que se aplicará sobre cada elemento de una colección.
@@ -102,6 +81,26 @@ Se interpreta como:  "Para cada lanzamiento `d`, utilizar el campo `suma` para o
 
 El operador `=>` sirve para indicar **qué se hará con cada elemento de la colección**. Aunque al principio puede parecer extraño, con la práctica se vuelve una forma rápida y sencilla de escribir consultas en LINQ.
 
+## Where — Filtrar registros
+
+**¿Qué es?**
+
+Permite obtener únicamente los elementos que cumplen una condición determinada.
+
+**Ejemplo:**
+
+Obtener los lanzamientos donde ambos dados tuvieron el mismo valor.
+
+```csharp
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    var iguales = contexto.Dados
+                           .Where(d => d.valoresIguales)
+                           .ToList();
+}
+```
+
+---
 
 ## Select — Proyectar (seleccionar campos específicos)
 
