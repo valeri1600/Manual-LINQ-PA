@@ -1,174 +1,160 @@
 # 3. Consultas Básicas con LINQ
 
-Todos los ejemplos de esta sección están en la **Capa de Datos** (LINQ to Entities) o **Capa de Negocio** (LINQ to Objects), según se indica.
+Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando la arquitectura de 4 capas.
 
 ---
 
 ## Where — Filtrar registros
 
-**Capa:** Datos (LINQ to Entities)
+**¿Qué es?**
+
+Permite obtener únicamente los elementos que cumplen una condición determinada.
+
+**Ejemplo:**
+
+Obtener los lanzamientos donde ambos dados tuvieron el mismo valor.
 
 ```csharp
-// Obtener tutorías activas de un estudiante específico
-// Ref: Datos/RepositorioTutoria.cs → método ObtenerActivasPorEstudiante()
-public List<Tutoria> ObtenerActivasPorEstudiante(int estudianteId)
-{
-    using (var context = new ContextoBD())
-    {
-        return context.Tutorias
-                      .Where(t => t.EstudianteId == estudianteId
-                               && t.Activa == true)
-                      .ToList();
-    }
-}
-```
-
-**SQL generado por Entity Framework:**
-```sql
-SELECT * FROM Tutorias
-WHERE EstudianteId = @p0 AND Activa = 1
+var iguales = Dado_Logica.ListarDados()
+                         .Where(d => d.valoresIguales)
+                         .ToList();
 ```
 
 ---
 
-## Select — Proyectar (seleccionar solo algunos campos)
+## Select — Proyectar (seleccionar campos específicos)
 
-**Capa:** Negocio (LINQ to Objects)
+**¿Qué es?**
+
+Permite seleccionar únicamente la información que se necesita de cada registro.
+
+**Ejemplo:**
+
+Obtener solamente los puntajes registrados.
 
 ```csharp
-// Obtener solo los nombres de estudiantes con tutoría activa
-// Ref: Negocio/NegocioTutoria.cs → método ObtenerNombresActivos()
-public List<string> ObtenerNombresActivos()
-{
-    var tutorias = _repositorio.ObtenerTodas();
-
-    return tutorias
-           .Where(t => t.Activa)
-           .Select(t => t.Estudiante.Nombre)
-           .Distinct()
-           .ToList();
-}
+var puntajes = Dado_Logica.ListarDados()
+                          .Select(d => d.puntaje)
+                          .ToList();
 ```
 
 ---
 
 ## OrderBy y OrderByDescending — Ordenar
 
-**Capa:** Datos (LINQ to Entities)
+**¿Qué es?**
+
+Permiten ordenar la información de forma ascendente o descendente.
+
+**Ejemplo:**
+
+Obtener los lanzamientos ordenados de mayor a menor puntaje.
 
 ```csharp
-// Obtener pacientes ordenados por apellido, luego por nombre
-// Ref: Datos/RepositorioPaciente.cs → método ObtenerOrdenados()
-public List<Paciente> ObtenerOrdenados()
-{
-    using (var context = new ContextoBD())
-    {
-        return context.Pacientes
-                      .OrderBy(p => p.Apellido)
-                      .ThenBy(p => p.Nombre)
-                      .ToList();
-    }
-}
+var ordenados = Dado_Logica.ListarDados()
+                           .OrderByDescending(d => d.puntaje)
+                           .ToList();
 ```
 
 ---
 
 ## FirstOrDefault — Obtener un solo registro
 
-**Capa:** Datos (LINQ to Entities)
+**¿Qué es?**
+
+Devuelve el primer elemento que cumple una condición. Si no existe, retorna `null`.
+
+**Ejemplo:**
+
+Obtener el primer lanzamiento con puntaje de 5.
 
 ```csharp
-// Buscar un paciente por su cédula
-// Ref: Datos/RepositorioPaciente.cs → método BuscarPorCedula()
-public Paciente BuscarPorCedula(string cedula)
-{
-    using (var context = new ContextoBD())
-    {
-        // Retorna el paciente o null si no existe
-        return context.Pacientes
-                      .FirstOrDefault(p => p.Cedula == cedula);
-    }
-}
+var lanzamiento = Dado_Logica.ListarDados()
+                             .FirstOrDefault(d => d.puntaje == 5);
 ```
 
-> ⚠️ **Importante:** Siempre verifica que el resultado no sea `null` antes de usarlo en la capa de Negocio:
+> **Importante:** Antes de utilizar el resultado, se debe verificar que no sea `null`.
+
 ```csharp
-var paciente = _repositorio.BuscarPorCedula(cedula);
-if (paciente == null)
-    throw new Exception("Paciente no encontrado.");
+if (lanzamiento == null)
+{
+    MessageBox.Show("No existen lanzamientos con puntaje 5.");
+}
 ```
 
 ---
 
-## Include — Cargar datos relacionados (JOIN)
+## Any — Verificar si existe algún registro
 
-**Capa:** Datos (LINQ to Entities)
+**¿Qué es?**
+
+Permite comprobar si existe al menos un elemento que cumpla una condición.
+
+**Ejemplo:**
+
+Verificar si existe algún lanzamiento con dados iguales.
 
 ```csharp
-// Obtener tutorías incluyendo los datos del estudiante y del tutor
-// Ref: Datos/RepositorioTutoria.cs → método ObtenerConRelaciones()
-public List<Tutoria> ObtenerConRelaciones()
-{
-    using (var context = new ContextoBD())
-    {
-        return context.Tutorias
-                      .Include(t => t.Estudiante)
-                      .Include(t => t.Tutor)
-                      .Where(t => t.Activa)
-                      .ToList();
-    }
-}
-```
-
-**Equivalente en SQL:**
-```sql
-SELECT t.*, e.*, tu.*
-FROM Tutorias t
-INNER JOIN Estudiantes e ON t.EstudianteId = e.Id
-INNER JOIN Tutores tu ON t.TutorId = tu.Id
-WHERE t.Activa = 1
+bool existe = Dado_Logica.ListarDados()
+                         .Any(d => d.valoresIguales);
 ```
 
 ---
 
-## Any — Verificar si existe algo
+## Take — Obtener una cantidad específica de registros
 
-**Capa:** Negocio (LINQ to Objects)
+**¿Qué es?**
+
+Permite seleccionar un número determinado de elementos.
+
+**Ejemplo:**
+
+Obtener los cinco primeros lanzamientos registrados.
 
 ```csharp
-// Verificar si un estudiante ya tiene una tutoría registrada hoy
-// Ref: Negocio/NegocioTutoria.cs → método YaTieneTutoriaHoy()
-public bool YaTieneTutoriaHoy(int estudianteId)
-{
-    var tutorias = _repositorio.ObtenerPorEstudiante(estudianteId);
+var primerosCinco = Dado_Logica.ListarDados()
+                               .Take(5)
+                               .ToList();
+```
 
-    return tutorias.Any(t => t.Fecha.Date == DateTime.Today);
-}
+---
+
+## Distinct — Eliminar elementos repetidos
+
+**¿Qué es?**
+
+Permite obtener únicamente valores únicos, eliminando duplicados.
+
+**Ejemplo:**
+
+Obtener los puntajes diferentes obtenidos durante los lanzamientos.
+
+```csharp
+var puntajesUnicos = Dado_Logica.ListarDados()
+                                .Select(d => d.puntaje)
+                                .Distinct()
+                                .ToList();
 ```
 
 ---
 
 ## Combinando operadores
 
-**Capa:** Datos (LINQ to Entities)
+**¿Qué es?**
+
+LINQ permite combinar varios operadores para obtener resultados más específicos.
+
+**Ejemplo:**
+
+Obtener los cinco lanzamientos con puntaje mayor a cero, ordenados de mayor a menor.
 
 ```csharp
-// Obtener las 5 tutorías más recientes de un estudiante
-// Ref: Datos/RepositorioTutoria.cs → método ObtenerUltimas()
-public List<Tutoria> ObtenerUltimas(int estudianteId, int cantidad = 5)
-{
-    using (var context = new ContextoBD())
-    {
-        return context.Tutorias
-                      .Where(t => t.EstudianteId == estudianteId)
-                      .OrderByDescending(t => t.Fecha)
-                      .Take(cantidad)
-                      .Include(t => t.Estudiante)
-                      .ToList();
-    }
-}
+var mejores = Dado_Logica.ListarDados()
+                         .Where(d => d.puntaje > 0)
+                         .OrderByDescending(d => d.puntaje)
+                         .Take(5)
+                         .ToList();
 ```
 
 ---
 
-[← Arquitectura de Capas](02-arquitectura-capas.md) | [Siguiente: Funciones de Agregado →](04-funciones-agregado.md)
