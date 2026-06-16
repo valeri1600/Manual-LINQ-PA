@@ -1,5 +1,5 @@
-# LINQ 
-## ¿ Qué es LINQ ?
+# 1. LINQ 
+## ***¿ Qué es LINQ ?***
 <p align="justify">
 LINQ (Language Integrated Query) es una tecnología desarrollada por Microsoft que forma parte del ecosistema .NET. Se trata de un conjunto de extensiones al lenguaje C#  que permite escribir consultas de manera directa dentro del código, utilizando una sintaxis similar a la de SQL, pero trabajando con datos de diferentes orígenes.
 </p>
@@ -90,7 +90,7 @@ var resultado = listaDados
 
 ---
 
-# 🔄 Operaciones CRUD
+# Operaciones CRUD
 
 Las operaciones CRUD son las funciones básicas que se utilizan para trabajar con datos en cualquier sistema informático. Su nombre proviene de las siglas en inglés: **Create, Read, Update y Delete**, que significan **Crear, Leer, Actualizar y Eliminar**.
 
