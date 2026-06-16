@@ -72,6 +72,20 @@ Para demostrar el funcionamiento de LINQ dentro de una arquitectura de 4 capas, 
 
 Para desarrollar una aplicación utilizando el modelo de 4 capas en Visual Studio, primero se deben crear los proyectos que representarán cada capa: Capa de Entidades, Capa de Datos, Capa de Lógica de Negocio y Capa de Presentación. Esta separación permite distribuir las responsabilidades del sistema, logrando un código más ordenado, fácil de mantener y escalable.
 
+Para implementar la arquitectura de 4 capas en Visual Studio, se deben crear los siguientes proyectos:
+
+* **Capa de Entidades:** Biblioteca de clases (Class Library).
+* **Capa de Datos:** Biblioteca de clases (Class Library).
+* **Capa de Lógica de Negocio:** Biblioteca de clases (Class Library).
+* **Capa de Presentación:** Aplicación Windows Forms.
+
+## Conexión a la Base de Datos mediante LINQ to SQL
+
+Para establecer la conexión con la base de datos, es necesario contar previamente con una base de datos creada en SQL Server 2022 y con las tablas que almacenarán la información del sistema. Estas tablas permitirán realizar operaciones como insertar, consultar, modificar y eliminar registros.
+
+Sin embargo, para evitar escribir manualmente las consultas SQL en C#, se puede utilizar **LINQ to SQL**, una tecnología que genera una clase de conexión denominada `DataContext`. Esta clase permite interactuar directamente con las tablas de la base de datos como si fueran objetos del programa, facilitando la realización de operaciones CRUD (Crear, Leer, Actualizar y Eliminar) mediante código C#, sin necesidad de escribir instrucciones SQL de forma explícita.
+
+
 ## Aplicación del modelo de 4 capas
 
 **Capa de Entidades**
