@@ -17,7 +17,7 @@ Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además
 * El manejo de datos es más natural, consistente y eficiente para los desarrolladores.
 
 ## ¿Por qué se utiliza LINQ en una Arquitectura por Capas?
-<p align="justify">
+
 LINQ se utiliza en una arquitectura por capas porque facilita la consulta y manipulación de datos de una manera clara y ordenada, respetando la responsabilidad de cada capa. Permite filtrar, ordenar, agrupar y transformar información con menos código, lo que mejora el mantenimiento y la reutilización del sistema, evitando mezclar la lógica del negocio con el acceso a los datos.
 
 ## Diagrama del Modelo de 4 capas y LINQ
