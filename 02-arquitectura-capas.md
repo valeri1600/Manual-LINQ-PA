@@ -113,7 +113,7 @@ La capa de negocio aplica las reglas del sistema antes de almacenar la informaci
 Por ejemplo, antes de registrar un lanzamiento se verifica que los valores sean válidos:
 
 <p align="center">
-  <img src="./assets/imagenes/negocio1.png" alt="Concepto de LINQ y Capas" width="300">
+  <img src="./assets/imagenes/negocio1.png" alt="Concepto de LINQ y Capas" width="400">
 </p>
 
 Posteriormente, se calcula la suma y el promedio de los dados:
