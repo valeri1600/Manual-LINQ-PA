@@ -1,14 +1,11 @@
 # 1. LINQ 
 ## ***¿ Qué es LINQ ?***
-<p align="justify">
+
 LINQ (Language Integrated Query) es una tecnología desarrollada por Microsoft que forma parte del ecosistema .NET. Se trata de un conjunto de extensiones al lenguaje C#  que permite escribir consultas de manera directa dentro del código, utilizando una sintaxis similar a la de SQL, pero trabajando con datos de diferentes orígenes.
-</p>
-<p align="justify">
+
 La idea principal de LINQ es facilitar la consulta y manipulación de datos utilizando una sola forma de escribir las consultas. Gracias a LINQ, se puede usar la misma sintaxis para trabajar con datos que provienen de listas, bases de datos, archivos XML, servicios web u otras fuentes, sin necesidad de aprender métodos diferentes para cada una.
-</p>
-<p align="justify">
+
 Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además, cuando se usa con bases de datos (especialmente Entity Framework), LINQ traduce automáticamente las consultas al lenguaje SQL correspondiente, optimizando el acceso a la información.
-</p>
 
 ***Beneficios:***
 
