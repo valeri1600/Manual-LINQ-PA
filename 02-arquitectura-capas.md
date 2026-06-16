@@ -96,7 +96,7 @@ Para establecer la conexión con la base de datos, es necesario contar previamen
 Sin embargo, para evitar escribir manualmente las consultas SQL en C#, se puede utilizar **LINQ to SQL**, una tecnología que genera una clase de conexión denominada `DataContext`. Esta clase permite interactuar directamente con las tablas de la base de datos como si fueran objetos del programa, facilitando la realización de operaciones CRUD (Crear, Leer, Actualizar y Eliminar) mediante código C#, sin necesidad de escribir instrucciones SQL de forma explícita.
 
 <p align="center">
-  <img src="./assets/imagenes/SQL.png" alt="Concepto de LINQ y Capas" width="400">
+  <img src="./assets/imagenes/SQL.png" alt="Concepto de LINQ y Capas" width="500">
 </p>
 
 ## Aplicación del modelo de 4 capas
