@@ -318,7 +318,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 ---
 ## Operaciones Basicas de Consulta (Sintaxis de consulta)
 
-## WHERE — Filtrar registros
+## Where — Filtrar registros
 
 SQL equivalente: `WHERE`
 
@@ -329,7 +329,7 @@ var lista =
     select d;
 ```
 ---
-## SELECT — Seleccionar datos
+## Select — Seleccionar datos
 
 SQL equivalente: `SELECT`
 
@@ -339,7 +339,7 @@ var lista =
     select d.puntaje;
 ```
 ---
-## ORDER BY — Orden ascendente
+## Order By — Orden ascendente
 
 SQL equivalente: `ORDER BY ASC`
 
@@ -350,7 +350,7 @@ var lista =
     select d;
 ```
 ---
-## ORDER BY DESC— Orden descendente
+## Order By Desc— Orden descendente
 
 SQL equivalente: `ORDER BY DESC`
 
@@ -361,7 +361,7 @@ var lista =
     select d;
 ```
 ---
-## FIRST OR DEFAULT — Primer registro
+## First Or Default — Primer registro
 
 SQL equivalente: `TOP 1`
 
@@ -372,7 +372,7 @@ var dato =
      select d).FirstOrDefault();
 ```
 ---
-## ANY — EXISTS
+## Any — EXISTS
 
 SQL equivalente: `EXISTS`
 
@@ -383,7 +383,7 @@ bool existe =
      select d).Any();
 ```
 ---
-## SELECT ANÓNIMO — Proyección de campos
+## Select ANÓNIMO — Proyección de campos
 
 SQL equivalente: seleccionar columnas específicas
 
@@ -398,7 +398,7 @@ var lista =
     };
 ```
 ---
-## TAKE — TOP N registros
+## Take — TOP N registros
 
 SQL equivalente: TOP N
 ```csharp
@@ -408,7 +408,7 @@ var lista =
     .Take(5);
 ```
 ---
-## DISTINCT — Valores únicos
+## Distinct — Valores únicos
 
 SQL equivalente: DISTINCT
 ```csharp
