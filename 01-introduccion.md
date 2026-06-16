@@ -89,3 +89,11 @@ var resultado = listaDados
 | `Any` | Verificar existencia | `.Any(x => x.Nombre == "Ana")` |
 
 ---
+
+# 🔄 Operaciones CRUD
+
+Las operaciones CRUD son las funciones básicas que se utilizan para trabajar con datos en cualquier sistema informático. Su nombre proviene de las siglas en inglés: **Create, Read, Update y Delete**, que significan **Crear, Leer, Actualizar y Eliminar**.
+
+Estas operaciones permiten gestionar la información almacenada en una base de datos, ya sea para registrar nuevos datos, consultarlos, modificarlos o eliminarlos según las necesidades del sistema.
+
+En una arquitectura de software, los CRUD son fundamentales porque representan la base del manejo de datos dentro de cualquier aplicación, especialmente cuando se trabaja con bases de datos como SQL Server o tecnologías como LINQ.
