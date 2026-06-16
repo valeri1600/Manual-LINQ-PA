@@ -72,7 +72,7 @@ Para demostrar el funcionamiento de LINQ dentro de una arquitectura de 4 capas, 
 
 Para desarrollar una aplicación utilizando el modelo de 4 capas en Visual Studio, primero se deben crear los proyectos que representarán cada capa: Capa de Entidades, Capa de Datos, Capa de Lógica de Negocio y Capa de Presentación. Esta separación permite distribuir las responsabilidades del sistema, logrando un código más ordenado, fácil de mantener y escalable.
 
-### Aplicación del modelo de 4 capas
+## Aplicación del modelo de 4 capas
 
 **Capa de Entidades**
 
