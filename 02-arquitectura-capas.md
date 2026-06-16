@@ -1,4 +1,9 @@
 # Arquitectura 4 Capas
+
+El modelo de 4 capas es una arquitectura muy utilizada en el desarrollo de software, ya que permite dividir una aplicación en partes con responsabilidades específicas. Esta separación facilita la organización del código, el mantenimiento del sistema y la reutilización de componentes. 
+
+Ayuda a comprender el papel que cumple cada capa dentro del proyecto, permitiendo que cada una se encargue de una tarea determinada y mejorando la escalabilidad y el desarrollo de la aplicación.
+
 <p align="center">
   <img src="./assets/imagenes/trans.png" alt="Concepto de LINQ y Capas" width="300">
 </p>
@@ -68,18 +73,18 @@ Cuando el usuario realiza una acción, la capa de presentación envía la solici
 
 ## Ejemplo práctico: Uso de LINQ en una Arquitectura de 4 Capas
 
-Para demostrar el funcionamiento de LINQ dentro de una arquitectura de 4 capas, se desarrolló una aplicación en Visual Studio que simula lanzamientos de dos dados. El sistema genera resultados aleatorios, calcula puntajes y almacena la información en una base de datos SQL Server utilizando ADO.NET.
+Para demostrar el funcionamiento de LINQ dentro de una arquitectura de 4 capas, se desarrolló una aplicación en Visual Studio que simula lanzamientos de dos dados. El sistema genera resultados aleatorios, calcula puntajes y almacena la información en una base de datos SQL Server.
 
-Para desarrollar una aplicación utilizando el modelo de 4 capas en Visual Studio, primero se deben crear los proyectos que representarán cada capa: Capa de Entidades, Capa de Datos, Capa de Lógica de Negocio y Capa de Presentación. Esta separación permite distribuir las responsabilidades del sistema, logrando un código más ordenado, fácil de mantener y escalable.
-
-Para implementar la arquitectura de 4 capas en Visual Studio, se deben crear los siguientes proyectos:
+Para implementar esta arquitectura, se crearon cuatro proyectos, cada uno con una responsabilidad específica:
 
 * **Capa de Entidades:** Biblioteca de clases (Class Library).
 * **Capa de Datos:** Biblioteca de clases (Class Library).
 * **Capa de Lógica de Negocio:** Biblioteca de clases (Class Library).
 * **Capa de Presentación:** Aplicación Windows Forms.
 
-Después de crear los proyectos, es necesario agregar las referencias entre las capas para que puedan comunicarse entre sí. La **Capa de Entidades** debe ser referenciada por la **Capa de Datos**, la **Capa de Lógica de Negocio** y la **Capa de Presentación**, ya que contiene las clases que transportan la información del sistema.
+Esta separación permite distribuir las responsabilidades del sistema, obteniendo un código más organizado, mantenible y escalable.
+
+Después de crear los proyectos, es necesario agregar las referencias entre ellos para permitir su comunicación:
 
 * **Capa de Datos** → referencia a **Capa de Entidades**.
 * **Capa de Lógica de Negocio** → referencia a **Capa de Entidades** y **Capa de Datos**.
@@ -91,9 +96,9 @@ Después de crear los proyectos, es necesario agregar las referencias entre las 
 
 ## Conexión a la Base de Datos mediante LINQ to SQL
 
-Para establecer la conexión con la base de datos, es necesario contar previamente con una base de datos creada en SQL Server 2022 y con las tablas que almacenarán la información del sistema. Estas tablas permitirán realizar operaciones como insertar, consultar, modificar y eliminar registros.
+Para trabajar con LINQ to SQL, primero es necesario contar con una base de datos creada en SQL Server 2022 y con las tablas que almacenarán la información del sistema. A partir de esta base de datos, LINQ to SQL genera una clase denominada `DataContext`, la cual representa la conexión con la base de datos y permite acceder a sus tablas como si fueran objetos de C#.
 
-Sin embargo, para evitar escribir manualmente las consultas SQL en C#, se puede utilizar **LINQ to SQL**, una tecnología que genera una clase de conexión denominada `DataContext`. Esta clase permite interactuar directamente con las tablas de la base de datos como si fueran objetos del programa, facilitando la realización de operaciones CRUD (Crear, Leer, Actualizar y Eliminar) mediante código C#, sin necesidad de escribir instrucciones SQL de forma explícita.
+Gracias a esta tecnología, es posible realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) mediante código C#, evitando escribir consultas SQL de forma manual y facilitando el acceso y manipulación de la información.
 
 <p align="center">
   <img src="./assets/imagenes/SQL.png" alt="Concepto de LINQ y Capas" width="500">
@@ -123,11 +128,12 @@ Esta entidad actúa como el medio de comunicación entre todas las capas.
 
 La capa de datos utiliza ADO.NET para insertar y recuperar información desde SQL Server mediante los métodos `InsertarDado()` y `ListarDados()`.
 
-Aunque el acceso a la base de datos se realiza mediante consultas SQL tradicionales, los datos recuperados son transformados en una lista de objetos `Dado_Entidad`, permitiendo posteriormente aplicar consultas LINQ.
 
 <p align="center">
   <img src="./assets/imagenes/datos1.png" alt="Concepto de LINQ y Capas" width=300">
 </p>
+
+Aunque el acceso a la base de datos se realiza mediante consultas SQL tradicionales, los datos recuperados son transformados en una lista de objetos `Dado_Entidad`, permitiendo posteriormente aplicar consultas LINQ.
 
 <p align="center">
   <img src="./assets/imagenes/datos2.png" alt="Concepto de LINQ y Capas" width="300">
