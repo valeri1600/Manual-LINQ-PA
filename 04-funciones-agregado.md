@@ -177,7 +177,7 @@ int minimo =
 
 ---
 
-## Equivalencia SQL ↔ LINQ
+## Equivalencia SQL y LINQ
 
 Una de las ventajas de LINQ es que reproduce exactamente lo que haría SQL, pero en C#.
 
