@@ -1,6 +1,6 @@
 # Arquitectura 4 Capas
 <p align="center">
-  <img src="./assets/imagenes/capas.png" alt="Concepto de LINQ y Capas" width="300">
+  <img src="./assets/imagenes/trans.png" alt="Concepto de LINQ y Capas" width="300">
 </p>
 
 ## 1. Capa de Presentación
