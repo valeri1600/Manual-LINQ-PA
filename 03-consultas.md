@@ -79,7 +79,7 @@ Se interpreta como: "Para cada lanzamiento `d`, seleccionar su puntaje."
 
 Se interpreta como:  "Para cada lanzamiento `d`, utilizar el campo `suma` para ordenar de mayor a menor."
 
-El operador `=>` sirve para indicar **qué se hará con cada elemento de la colección**. Aunque al principio puede parecer extraño, con la práctica se vuelve una forma rápida y sencilla de escribir consultas en LINQ.
+El operador `=>` sirve para indicar qué se hará con cada elemento de la colección.
 
 ## Where — Filtrar registros
 
