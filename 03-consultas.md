@@ -108,7 +108,20 @@ Se interpreta como:  "Para cada lanzamiento `d`, utilizar el campo `suma` para o
 
 El operador `=>` sirve para indicar qué se hará con cada elemento de la colección.
 
-##                             Operaciones Basicas de Consulta
+## Operaciones Basicas de Consulta
+
+## ToList() — Convertir resultados en lista
+
+### ¿Qué es?
+
+Permite ejecutar una consulta LINQ y convertir el resultado en una lista (List), lo que facilita trabajar con los datos dentro de la aplicación.
+
+### Ejemplo:
+
+```csharp
+var lista = contexto.Dados.ToList();
+```
+`ToList()` → ejecuta la consulta y convierte los registros en una lista de objetos (List<Dados>).
 
 ## Where — Filtrar registros
 
