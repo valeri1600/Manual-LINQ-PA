@@ -128,9 +128,8 @@ Esta entidad actúa como el medio de comunicación entre todas las capas.
 
 La capa de datos utiliza ADO.NET para insertar y recuperar información desde SQL Server mediante los métodos `InsertarDado()` y `ListarDados()`.
 
-
 <p align="center">
-  <img src="./assets/imagenes/datos1.png" alt="Concepto de LINQ y Capas" width=300">
+  <img src="./assets/imagenes/datos1.png" alt="Concepto de LINQ y Capas" width="300">
 </p>
 
 Aunque el acceso a la base de datos se realiza mediante consultas SQL tradicionales, los datos recuperados son transformados en una lista de objetos `Dado_Entidad`, permitiendo posteriormente aplicar consultas LINQ.
