@@ -68,15 +68,23 @@ Se utiliza para definir la estructura de los datos que manejará la aplicación 
 * Transportar datos entre capas.
 * Mantener una estructura organizada de la información.
 
-## Funcionamiento general
+## Funcionamiento General del Sistema
 
-Cuando el usuario realiza una acción, la capa de presentación envía la solicitud a la capa de negocio. Esta procesa y valida la información, luego solicita a la capa de datos que acceda a la base de datos utilizando las entidades para transportar la información. Finalmente, la respuesta vuelve a la interfaz para mostrarse al usuario.
+Cuando el usuario realiza una acción en la interfaz, la información pasa por las diferentes capas del sistema de la siguiente manera:
 
-## Ejemplo práctico: Uso de LINQ en una Arquitectura de 4 Capas
+La Capa de Presentación recibe la acción del usuario.
+La Capa de Negocio valida y procesa la información.
+La Capa de Datos se encarga de almacenar o consultar la información en la base de datos.
+La respuesta retorna nuevamente a la interfaz para ser mostrada al usuario.
+
+Este flujo garantiza una separación clara de responsabilidades y mejora la organización del sistema.
+
+## Ejemplo práctico: Sistema de Dados con LINQ
 
 Para demostrar el funcionamiento de LINQ dentro de una arquitectura de 4 capas, se desarrolló una aplicación en Visual Studio que simula lanzamientos de dos dados. El sistema genera resultados aleatorios, calcula puntajes y almacena la información en una base de datos SQL Server.
 
-Para implementar esta arquitectura, se crearon cuatro proyectos, cada uno con una responsabilidad específica:
+## Estructura del Proyecto
+El sistema se divide en cuatro proyectos principales:
 
 * **Capa de Entidades:** Biblioteca de clases (Class Library).
 * **Capa de Datos:** Biblioteca de clases (Class Library).
@@ -85,6 +93,7 @@ Para implementar esta arquitectura, se crearon cuatro proyectos, cada uno con un
 
 Esta separación permite distribuir las responsabilidades del sistema, obteniendo un código más organizado, mantenible y escalable.
 
+## Referencias entre Capas
 Después de crear los proyectos, es necesario agregar las referencias entre ellos para permitir su comunicación:
 
 * **Capa de Datos** → referencia a **Capa de Entidades**.
@@ -97,9 +106,9 @@ Después de crear los proyectos, es necesario agregar las referencias entre ello
 
 ## Conexión a la Base de Datos mediante LINQ to SQL
 
-Para trabajar con LINQ to SQL, primero es necesario contar con una base de datos creada en SQL Server 2022 y con las tablas que almacenarán la información del sistema. A partir de esta base de datos, LINQ to SQL genera una clase denominada `DataContext`, la cual representa la conexión con la base de datos y permite acceder a sus tablas como si fueran objetos de C#.
+Para trabajar con LINQ to SQL, se necesita una base de datos creada en SQL Server. A partir de esta base de datos, Visual Studio genera una clase llamada DataContext, la cual actúa como puente entre la aplicación y la base de datos.
 
-Gracias a esta tecnología, es posible realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) mediante código C#, evitando escribir consultas SQL de forma manual y facilitando el acceso y manipulación de la información.
+Esta clase permite acceder a las tablas como objetos del sistema, facilitando la ejecución de operaciones CRUD sin necesidad de escribir consultas SQL manualmente.
 
 <p align="center">
   <img src="./assets/imagenes/SQL.png" alt="Concepto de LINQ y Capas" width="500">
@@ -143,7 +152,7 @@ Más adelante se explicará cómo se implementan las consultas LINQ y las operac
 
 **Capa de Negocio**
 
-La capa de negocio aplica las reglas del sistema antes de almacenar la información. En este proyecto, valida que los valores de los dados estén entre 1 y 6, calcula la suma y el promedio, y determina el puntaje correspondiente a cada lanzamiento.
+En esta capa se aplican las reglas del sistema. Se valida que los valores de los dados estén entre 1 y 6, y se calculan la suma, el promedio y el puntaje.
 
 Por ejemplo, antes de registrar un lanzamiento se verifica que los valores sean válidos:
 
@@ -196,6 +205,8 @@ De esta manera, la capa de presentación se encarga de recibir las acciones del 
 
 ### Conclusión del ejemplo
 
-Este caso práctico demuestra que LINQ puede integrarse fácilmente dentro de una arquitectura de 4 capas. Aunque la persistencia de datos se realiza mediante ADO.NET, LINQ permite consultar, filtrar y analizar la información recuperada utilizando una sintaxis sencilla y legible. De esta manera, se mantiene la separación de responsabilidades entre capas y se obtiene un código más organizado, reutilizable y fácil de mantener.
+La arquitectura de 4 capas permite organizar un sistema de forma clara y estructurada, separando responsabilidades y mejorando el mantenimiento del código.
+
+La integración de LINQ facilita el manejo de datos, permitiendo realizar consultas, filtros y análisis de manera más sencilla y eficiente dentro del sistema.
 
 
