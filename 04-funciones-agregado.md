@@ -1,6 +1,6 @@
 # 4. Funciones de Agregado en LINQ
 
-Las funciones de agregado en LINQ permiten realizar **cálculos sobre conjuntos de datos**: sumar, contar, obtener promedios, valores máximos o mínimos. Se aplican sobre colecciones y devuelven **un único resultado**.
+Las funciones de agregado en LINQ permiten realizar cálculos sobre conjuntos de datos: sumar, contar, obtener promedios, valores máximos o mínimos. Se aplican sobre colecciones y devuelven un único resultado.
 
 ---
 
