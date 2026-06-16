@@ -116,6 +116,14 @@ Esta clase permite acceder a las tablas como objetos del sistema, facilitando la
   <img src="./assets/imagenes/SQL.png" alt="Concepto de LINQ y Capas" width="500">
 </p>
 
+La conexión con la base de datos se establece mediante la instancia del DataContext, utilizando el siguiente formato:
+
+```csharp
+using (DadosDataContext contexto = new DadosDataContext())
+{
+    // Consultas LINQ
+}
+```
 ## Aplicación del modelo de 4 capas
 
 **Capa de Entidades**
