@@ -111,7 +111,7 @@ Después de crear los proyectos, es necesario agregar las referencias entre ello
 Para trabajar con LINQ to SQL, se necesita una base de datos creada en SQL Server. A partir de esta base de datos, Visual Studio genera una clase llamada DataContext, la cual actúa como puente entre la aplicación y la base de datos.
 
 <p align="center">
-  <img src="./assets/imagenes/basesql.png" alt="Concepto de LINQ y Capas" width="300">
+  <img src="./assets/imagenes/basesql.png" alt="Concepto de LINQ y Capas" width="400">
 </p>
 
 Esta clase permite acceder a las tablas como objetos del sistema, facilitando la ejecución de operaciones CRUD sin necesidad de escribir consultas SQL manualmente.
