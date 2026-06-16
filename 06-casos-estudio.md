@@ -594,7 +594,7 @@ Al seleccionar una opción, el sistema utilizará internamente el identificador 
 Este proceso facilita la carga de información en controles como el `ComboBox`, mejorando la interacción del usuario y reduciendo errores en el ingreso de datos.
 
 <p align="center">
-  <img src="./assets/imagenes/pre.png" alt="Concepto de LINQ y Capas" width="300">
+  <img src="./assets/imagenes/pre.png" alt="Concepto de LINQ y Capas" width="400">
 </p>
 
 ## Resumen: métodos LINQ usados en el proyecto
@@ -612,7 +612,7 @@ Este proceso facilita la carga de información en controles como el `ComboBox`, 
 
 ## Flujo CRUD completo del sistema
 <p align="center">
-  <img src="./assets/imagenes/flujo.png" alt="Concepto de LINQ y Capas" width="300">
+  <img src="./assets/imagenes/flujo.png" alt="Concepto de LINQ y Capas" width="500">
 </p>
 
 
