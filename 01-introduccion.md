@@ -21,7 +21,7 @@ Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además
 LINQ se utiliza en una arquitectura por capas porque facilita la consulta y manipulación de datos de una manera clara y ordenada, respetando la responsabilidad de cada capa. Permite filtrar, ordenar, agrupar y transformar información con menos código, lo que mejora el mantenimiento y la reutilización del sistema, evitando mezclar la lógica del negocio con el acceso a los datos.
 </p>
 
-### Sintaxis de consulta (similar a SQL)
+### Sintaxis de consulta 
 ```csharp
 var resultado = (from x in lista
                  where x.Activo == true
@@ -29,15 +29,14 @@ var resultado = (from x in lista
                  select x).ToList();
 ```
 
-Con LINQ:
+Con LINQ: Hace el código más **legible**, **mantenible** y **seguro** (evita errores de iteración manual).
+
 ```csharp
-// Capa de Datos — con LINQ, limpio y expresivo
+// Capa de Datos 
 return context.Tutorias
               .Where(t => t.EstudianteId == id && t.Activa == true)
               .ToList();
 ```
-
-LINQ hace el código más **legible**, **mantenible** y **seguro** (evita errores de iteración manual).
 
 
 ## Operadores más usados
@@ -54,7 +53,6 @@ LINQ hace el código más **legible**, **mantenible** y **seguro** (evita errore
 
 ---
 
-[← Inicio](index.md) | [Siguiente: Arquitectura de Capas →](02-arquitectura-capas.md)
 ## Diagrama del Modelo de 4 capas y LINQ
 Cada capa cumple con una funcion en especifico:
 * ***Capa de Presentación*** (La interfaz de usuario: la pantalla).
