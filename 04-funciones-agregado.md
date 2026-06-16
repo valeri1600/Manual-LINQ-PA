@@ -9,7 +9,7 @@ Las funciones de agregado en LINQ permiten realizar **cálculos sobre conjuntos 
 Todos los ejemplos de esta sección usan `DadosDataContext`, que es el contexto LINQ to SQL generado a partir de la base de datos SQL Server.
 
 ```csharp
-// Ref: Datos/Dado_Datos.cs — patrón base de consulta
+
 using (DadosDataContext contexto = new DadosDataContext())
 {
     var resultado = contexto.Dados
@@ -27,7 +27,6 @@ using (DadosDataContext contexto = new DadosDataContext())
 Permite contar la cantidad de elementos en una colección.
 
 ```csharp
-// Ref: Datos/Dado_Datos.cs → método ContarTodos()
 using (DadosDataContext contexto = new DadosDataContext())
 {
     int total = contexto.Dados.Count();
@@ -35,8 +34,9 @@ using (DadosDataContext contexto = new DadosDataContext())
 ```
 
 **Con condición:**
+Contar solo los lanzamientos que obtuvieron puntaje
+
 ```csharp
-// Contar solo los lanzamientos que obtuvieron puntaje
 int total = contexto.Dados.Count(d => d.puntaje > 0);
 ```
 
@@ -47,7 +47,6 @@ int total = contexto.Dados.Count(d => d.puntaje > 0);
 Suma los valores de una propiedad numérica.
 
 ```csharp
-// Ref: Datos/Dado_Datos.cs → método SumarPuntajes()
 using (DadosDataContext contexto = new DadosDataContext())
 {
     int sumaTotal = contexto.Dados.Sum(d => d.puntaje);
@@ -61,7 +60,6 @@ using (DadosDataContext contexto = new DadosDataContext())
 Calcula el promedio de los valores.
 
 ```csharp
-// Ref: Datos/Dado_Datos.cs → método PromedioPuntajes()
 using (DadosDataContext contexto = new DadosDataContext())
 {
     double promedio = contexto.Dados.Average(d => d.puntaje);
@@ -75,7 +73,6 @@ using (DadosDataContext contexto = new DadosDataContext())
 Obtiene el valor más alto de una columna.
 
 ```csharp
-// Ref: Datos/Dado_Datos.cs → método PuntajeMaximo()
 using (DadosDataContext contexto = new DadosDataContext())
 {
     int maximo = contexto.Dados.Max(d => d.puntaje);
@@ -89,7 +86,6 @@ using (DadosDataContext contexto = new DadosDataContext())
 Obtiene el valor más bajo de una columna.
 
 ```csharp
-// Ref: Datos/Dado_Datos.cs → método PuntajeMinimo()
 using (DadosDataContext contexto = new DadosDataContext())
 {
     int minimo = contexto.Dados.Min(d => d.puntaje);
@@ -103,7 +99,6 @@ using (DadosDataContext contexto = new DadosDataContext())
 Ejemplo combinado: obtener estadísticas **solo de los lanzamientos con puntaje mayor a 0**.
 
 ```csharp
-// Ref: Datos/Dado_Datos.cs → método ObtenerEstadisticas()
 using (DadosDataContext contexto = new DadosDataContext())
 {
     int total = contexto.Dados.Count(d => d.puntaje > 0);
@@ -200,10 +195,8 @@ WHERE puntaje > 0;
 
 **LINQ equivalente:**
 ```csharp
-// Ref: Datos/Dado_Datos.cs → método ResumenEstadistico()
 using (DadosDataContext contexto = new DadosDataContext())
 {
-    // Filtro base reutilizable (equivale al WHERE de SQL)
     var datos = contexto.Dados.Where(d => d.puntaje > 0);
 
     int    total    = datos.Count();
@@ -214,7 +207,6 @@ using (DadosDataContext contexto = new DadosDataContext())
 }
 ```
 
-> 💡 Guardar la consulta filtrada en `var datos` evita repetir el `.Where()` en cada línea y ejecuta el filtro **una sola vez** en la base de datos.
 
 ---
 
