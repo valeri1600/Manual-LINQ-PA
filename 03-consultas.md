@@ -112,11 +112,11 @@ El operador `=>` sirve para indicar qué se hará con cada elemento de la colecc
 
 ### ToList() — Convertir resultados en lista
 
-### ¿Qué es?
+***¿Qué es?***
 
 Permite ejecutar una consulta LINQ y convertir el resultado en una lista (List), lo que facilita trabajar con los datos dentro de la aplicación.
 
-### Ejemplo:
+**Ejemplo:**
 
 ```csharp
 var lista = contexto.Dados.ToList();
@@ -318,7 +318,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 ---
 ## Operaciones Basicas de Consulta (Sintaxis de consulta)
 
-## Where — Filtrar registros
+### Where — Filtrar registros
 
 SQL equivalente: `WHERE`
 
@@ -424,7 +424,7 @@ Obtener los lanzamientos de dados cuyo puntaje sea mayor a 0, ordenarlos de form
 
 ---
 
-### SQL equivalente:
+ SQL equivalente:
 ```sql
 SELECT puntaje, suma, promedio
 FROM Dados
