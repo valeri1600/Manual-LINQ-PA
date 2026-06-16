@@ -53,7 +53,7 @@ Donde:
 - **Origen de datos** corresponde a la tabla del `DataContext`.
 - `Where()`  filtra los registros.
 - `GroupBy()`  agrupa la información.
-- `Select()` →define el resultado final que se desea obtener.
+- `Select()`  define el resultado final que se desea obtener.
 - `OrderBy()` o `OrderByDescending()`  ordena los datos.
 - `ToList()`  ejecuta la consulta y convierte el resultado en una lista.
 
@@ -153,7 +153,7 @@ Permite ejecutar una consulta LINQ y convertir el resultado en una lista (List),
 ```csharp
 var lista = contexto.Dados.ToList();
 ```
-`ToList()` → ejecuta la consulta y convierte los registros en una lista de objetos (List < Dados >).
+`ToList()`  ejecuta la consulta y convierte los registros en una lista de objetos (List < Dados >).
 
 ### Where — Filtrar registros
 
