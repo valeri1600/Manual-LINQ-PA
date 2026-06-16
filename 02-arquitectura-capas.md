@@ -79,6 +79,12 @@ Para implementar la arquitectura de 4 capas en Visual Studio, se deben crear los
 * **Capa de Lógica de Negocio:** Biblioteca de clases (Class Library).
 * **Capa de Presentación:** Aplicación Windows Forms.
 
+Después de crear los proyectos, es necesario agregar las referencias entre las capas para que puedan comunicarse entre sí. La **Capa de Entidades** debe ser referenciada por la **Capa de Datos**, la **Capa de Lógica de Negocio** y la **Capa de Presentación**, ya que contiene las clases que transportan la información del sistema.
+
+* **Capa de Datos** → referencia a **Capa de Entidades**.
+* **Capa de Lógica de Negocio** → referencia a **Capa de Entidades** y **Capa de Datos**.
+* **Capa de Presentación** → referencia a **Capa de Entidades** y **Capa de Lógica de Negocio**.
+
 ## Conexión a la Base de Datos mediante LINQ to SQL
 
 Para establecer la conexión con la base de datos, es necesario contar previamente con una base de datos creada en SQL Server 2022 y con las tablas que almacenarán la información del sistema. Estas tablas permitirán realizar operaciones como insertar, consultar, modificar y eliminar registros.
