@@ -45,12 +45,13 @@ Es la capa encargada de la comunicación directa con la base de datos. Gestiona 
 
 Se utiliza para ejecutar consultas y modificaciones en la base de datos sin que las demás capas conozcan cómo se realizan internamente.
 
-## Funciones
+### Funciones
+
 * Conectarse a la base de datos.
-* Ejecutar consultas.
-* Insertar registros.
-* Actualizar información.
-* Eliminar datos.
+* Ejecutar consultas mediante LINQ.
+* Insertar registros (CRUD).
+* Actualizar información (CRUD).
+* Eliminar datos (CRUD).
 * Recuperar información.
 * Administrar conexiones y transacciones.
 
@@ -137,6 +138,8 @@ Aunque el acceso a la base de datos se realiza mediante consultas SQL tradiciona
 <p align="center">
   <img src="./assets/imagenes/datos2.png" alt="Concepto de LINQ y Capas" width="300">
 </p>
+
+Más adelante se explicará cómo se implementan las consultas LINQ y las operaciones CRUD, las cuales permiten manipular la información de manera más eficiente dentro de la aplicación.
 
 **Capa de Negocio**
 
