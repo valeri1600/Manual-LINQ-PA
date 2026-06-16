@@ -54,7 +54,7 @@ var resultado =
     select d;
 ```
 
- **Estructura básica:**
+**Estructura básica:**
 
 ```csharp
 from variable in origen
@@ -90,7 +90,7 @@ var resultado = listaDados
 
 ---
 
-# Operaciones CRUD
+## Operaciones CRUD
 
 Las operaciones CRUD son las funciones básicas que se utilizan para trabajar con datos en cualquier sistema informático. Su nombre proviene de las siglas en inglés: **Create, Read, Update y Delete**, que significan **Crear, Leer, Actualizar y Eliminar**.
 
