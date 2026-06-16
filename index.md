@@ -11,7 +11,7 @@
 | 2 | [🏗️ Arquitectura de Capas](02-arquitectura-capas.md) | Las 4 capas y dónde entra LINQ  |
 | 3 | [🔍 Consultas Básicas](03-consultas.md) | Where, Select, OrderBy, FirstOrDefault |
 | 4 | [📊 Funciones de Agregado](04-funciones-agregado.md) | Sum, Count, Average, Max, Min, GroupBy |
-| 5 | [💾 Operaciones CRUD](05-crud-linq.md) | Create, Read, Update, Delete con LINQ/EF |
+| 5 | [💾 Operaciones CRUD](05-crud-linq.md) | Create, Read, Update, Delete con LINQ |
 | 6 | [💼 Casos de Estudio](06-casos-estudio.md) | Escenarios reales resueltos con LINQ |
 | 7 | [📑 Referencias](07-referencias.md) | Formato de citación y fuentes utilizadas |
 
