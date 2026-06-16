@@ -21,7 +21,7 @@ Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además
 LINQ se utiliza en una arquitectura por capas porque facilita la consulta y manipulación de datos de una manera clara y ordenada, respetando la responsabilidad de cada capa. Permite filtrar, ordenar, agrupar y transformar información con menos código, lo que mejora el mantenimiento y la reutilización del sistema, evitando mezclar la lógica del negocio con el acceso a los datos.
 </p>
 
-### Sintaxis de consulta 
+***Sintaxis de consulta***
 ```csharp
 var resultado = (from x in lista
                  where x.Activo == true
