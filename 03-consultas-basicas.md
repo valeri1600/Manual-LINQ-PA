@@ -42,6 +42,67 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
+## ¿Qué significa `=>` en las consultas LINQ?
+
+Al comenzar a trabajar con LINQ, uno de los símbolos mas importante es `=>`. Este operador se conoce como **operador lambda** y se utiliza para indicar la condición o la acción que se aplicará sobre cada elemento de una colección.
+
+Su estructura general es la siguiente:
+
+```csharp
+elemento => condición
+```
+
+Se puede leer como: **"Para cada elemento, realiza esta acción o verifica esta condición".**
+
+Por ejemplo, en la siguiente consulta:
+
+```csharp
+contexto.Dados.Where(d => d.puntaje > 0)
+```
+
+la expresión:
+
+```csharp
+d => d.puntaje > 0
+```
+
+significa: **"Para cada dado (`d`), selecciona aquellos cuyo puntaje sea mayor que cero".**
+
+Donde:
+
+* **`d`** representa cada registro de la tabla `Dados`. Puedes pensar en él como una variable temporal.
+* **`=>`** se lee como "tal que", "va hacia" o "para cada".
+* **`d.puntaje > 0`** es la condición que debe cumplirse.
+
+Otros ejemplos son:
+
+**Obtener los lanzamientos con valores iguales:**
+
+```csharp
+.Where(d => d.valoresIguales)
+```
+
+Se interpreta como: "Para cada lanzamiento `d`, obtener aquellos donde `valoresIguales` sea verdadero."
+
+**Obtener únicamente los puntajes:**
+
+```csharp
+.Select(d => d.puntaje)
+```
+
+Se interpreta como: "Para cada lanzamiento `d`, seleccionar su puntaje."
+
+**Ordenar por suma:**
+
+```csharp
+.OrderByDescending(d => d.suma)
+```
+
+Se interpreta como:  "Para cada lanzamiento `d`, utilizar el campo `suma` para ordenar de mayor a menor."
+
+El operador `=>` sirve para indicar **qué se hará con cada elemento de la colección**. Aunque al principio puede parecer extraño, con la práctica se vuelve una forma rápida y sencilla de escribir consultas en LINQ.
+
+
 ## Select — Proyectar (seleccionar campos específicos)
 
 **¿Qué es?**
