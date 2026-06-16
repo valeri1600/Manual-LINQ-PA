@@ -1,4 +1,4 @@
-# Consultas con LINQ
+# 3. Consultas con LINQ
 Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando **LINQ to SQL** en la **Capa de Datos**.
 
 ---
@@ -110,7 +110,7 @@ El operador `=>` sirve para indicar qué se hará con cada elemento de la colecc
 
 ## Operaciones Basicas de Consulta (Sintaxis de métodos)
 
-## ToList() — Convertir resultados en lista
+### ToList() — Convertir resultados en lista
 
 ### ¿Qué es?
 
@@ -123,7 +123,7 @@ var lista = contexto.Dados.ToList();
 ```
 `ToList()` → ejecuta la consulta y convierte los registros en una lista de objetos (List < Dados >).
 
-## Where — Filtrar registros
+### Where — Filtrar registros
 
 **¿Qué es?**
 
@@ -144,7 +144,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-## Select — Proyectar (seleccionar campos específicos)
+### Select — Proyectar (seleccionar campos específicos)
 
 **¿Qué es?**
 
@@ -165,7 +165,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-## OrderBy y OrderByDescending — Ordenar
+### OrderBy y OrderByDescending — Ordenar
 
 **¿Qué es?**
 
@@ -186,7 +186,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-## FirstOrDefault — Obtener un solo registro
+### FirstOrDefault — Obtener un solo registro
 
 **¿Qué es?**
 
@@ -215,7 +215,7 @@ if (lanzamiento == null)
 
 ---
 
-## Any — Verificar si existe algún registro
+### Any — Verificar si existe algún registro
 
 **¿Qué es?**
 
@@ -235,7 +235,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-## Take — Obtener una cantidad específica de registros
+### Take — Obtener una cantidad específica de registros
 
 **¿Qué es?**
 
@@ -256,7 +256,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-## Skip — Omitir registros
+### Skip — Omitir registros
 ¿Qué es?  
 Permite saltar una cantidad de registros antes de devolver resultados.
 
@@ -275,7 +275,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-## Distinct — Eliminar elementos repetidos
+### Distinct — Eliminar elementos repetidos
 
 **¿Qué es?**
 
@@ -297,7 +297,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 
 ---
 
-## Combinando operadores
+### Combinando operadores
 LINQ permite combinar varios operadores para obtener resultados más específicos.
 
 **Ejemplo:**
@@ -329,7 +329,7 @@ var lista =
     select d;
 ```
 ---
-## Select — Seleccionar datos
+### Select — Seleccionar datos
 
 SQL equivalente: `SELECT`
 
@@ -339,7 +339,7 @@ var lista =
     select d.puntaje;
 ```
 ---
-## Order By — Orden ascendente
+### Order By — Orden ascendente
 
 SQL equivalente: `ORDER BY ASC`
 
@@ -350,7 +350,7 @@ var lista =
     select d;
 ```
 ---
-## Order By Desc— Orden descendente
+### Order By Desc— Orden descendente
 
 SQL equivalente: `ORDER BY DESC`
 
@@ -361,7 +361,7 @@ var lista =
     select d;
 ```
 ---
-## First Or Default — Primer registro
+### First Or Default — Primer registro
 
 SQL equivalente: `TOP 1`
 
@@ -372,7 +372,7 @@ var dato =
      select d).FirstOrDefault();
 ```
 ---
-## Any — EXISTS
+### Any — EXISTS
 
 SQL equivalente: `EXISTS`
 
@@ -383,7 +383,7 @@ bool existe =
      select d).Any();
 ```
 ---
-## Select ANÓNIMO — Proyección de campos
+### Select ANÓNIMO — Proyección de campos
 
 SQL equivalente: seleccionar columnas específicas
 
@@ -398,7 +398,7 @@ var lista =
     };
 ```
 ---
-## Take — TOP N registros
+### Take — TOP N registros
 
 SQL equivalente: TOP N
 ```csharp
@@ -408,7 +408,7 @@ var lista =
     .Take(5);
 ```
 ---
-## Distinct — Valores únicos
+### Distinct — Valores únicos
 
 SQL equivalente: DISTINCT
 ```csharp
