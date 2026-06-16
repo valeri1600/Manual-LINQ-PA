@@ -1,4 +1,4 @@
-# Arquitectura 4 Capas
+# 2. Arquitectura 4 Capas
 
 El modelo de 4 capas es una arquitectura muy utilizada en el desarrollo de software, ya que permite dividir una aplicación en partes con responsabilidades específicas. Esta separación facilita la organización del código, el mantenimiento del sistema y la reutilización de componentes. 
 
