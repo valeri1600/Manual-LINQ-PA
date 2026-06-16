@@ -21,6 +21,40 @@ Gracias a LINQ, el código se vuelve más legible, seguro  y productivo. Además
 LINQ se utiliza en una arquitectura por capas porque facilita la consulta y manipulación de datos de una manera clara y ordenada, respetando la responsabilidad de cada capa. Permite filtrar, ordenar, agrupar y transformar información con menos código, lo que mejora el mantenimiento y la reutilización del sistema, evitando mezclar la lógica del negocio con el acceso a los datos.
 </p>
 
+### Sintaxis de consulta (similar a SQL)
+```csharp
+var resultado = (from x in lista
+                 where x.Activo == true
+                 orderby x.Nombre
+                 select x).ToList();
+```
+
+Con LINQ:
+```csharp
+// Capa de Datos — con LINQ, limpio y expresivo
+return context.Tutorias
+              .Where(t => t.EstudianteId == id && t.Activa == true)
+              .ToList();
+```
+
+LINQ hace el código más **legible**, **mantenible** y **seguro** (evita errores de iteración manual).
+
+
+## Operadores más usados
+
+| Operador | Propósito | Ejemplo |
+|----------|-----------|---------|
+| `Where` | Filtrar | `.Where(x => x.Edad > 18)` |
+| `Select` | Proyectar/transformar | `.Select(x => x.Nombre)` |
+| `OrderBy` / `OrderByDescending` | Ordenar | `.OrderBy(x => x.Fecha)` |
+| `FirstOrDefault` | Primer elemento o null | `.FirstOrDefault(x => x.Id == id)` |
+| `ToList` | Ejecutar y materializar | `.ToList()` |
+| `Count` | Contar elementos | `.Count(x => x.Activo)` |
+| `Any` | Verificar existencia | `.Any(x => x.Nombre == "Ana")` |
+
+---
+
+[← Inicio](index.md) | [Siguiente: Arquitectura de Capas →](02-arquitectura-capas.md)
 ## Diagrama del Modelo de 4 capas y LINQ
 Cada capa cumple con una funcion en especifico:
 * ***Capa de Presentación*** (La interfaz de usuario: la pantalla).
