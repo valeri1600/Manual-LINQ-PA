@@ -1,4 +1,4 @@
-# Consultas Básicas con LINQ
+# Consultas con LINQ
 Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando **LINQ to SQL** en la **Capa de Datos**.
 
 ---
