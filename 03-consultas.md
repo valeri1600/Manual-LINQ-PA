@@ -16,7 +16,7 @@ using (DadosDataContext contexto = new DadosDataContext())
 * **`DadosDataContext`**: representa la conexión con la base de datos y permite acceder a las tablas generadas por LINQ to SQL.
 * **`contexto.Dados`**: corresponde a la tabla `Dados` sobre la cual se realizarán las consultas.
 * **`OperadorLINQ`**: representa el operador que se desea utilizar, como `Where`, `Select`, `OrderBy`, entre otros.
-* **`var resultado`**: la palabra clave `var` permite que C# determine automáticamente el tipo de dato de la variable según el resultado de la consulta. Esto simplifica la escritura del código sin necesidad de declarar explícitamente el tipo de dato.
+* **`var resultado`**: la palabra clave `var` permite que C# determine automáticamente el tipo de dato de la variable según el resultado de la consulta.
 * **`ToList()`**: ejecuta la consulta y convierte el resultado obtenido en una lista que puede ser utilizada posteriormente en la aplicación.
 
 Esta estructura sirve como base para la mayoría de las consultas realizadas con LINQ.
