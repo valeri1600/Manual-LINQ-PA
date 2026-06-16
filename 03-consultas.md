@@ -2,7 +2,32 @@
 Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando **LINQ to SQL** en la **Capa de Datos**.
 
 ---
-Antes de empezar con las consultas de LINQ, es importante comprender cómo están conformadas y cuál es su estructura básica. En la mayoría de los casos, las consultas siguen una estructura inicial que consiste en crear una instancia del contexto de datos, acceder a la tabla correspondiente y aplicar los operadores de LINQ según la necesidad del sistema. 
+
+## Tipos de sintaxis en LINQ
+
+En las consultas de LINQ existen dos tipos principales: la **sintaxis de consulta** (similar a SQL) y la **sintaxis de métodos**. La primera es similar a SQL y se utiliza con palabras clave como `from`, `where` y `select`.
+
+### Sintaxis de consulta 
+Esta sintaxis es muy parecida a SQL y utiliza palabras clave como `from`, `where` y `select`, lo que facilita su comprensión inicial.
+
+```csharp
+var resultado =
+    from d in listaDados
+    where d.puntaje > 0
+    select d;
+```
+## Sintaxis de métodos (Lambda)
+La sintaxis que utilizaremos en este proyecto es la sintaxis de métodos (lambda), ya que es más práctica, flexible y se usa con mayor frecuencia en aplicaciones reales.
+
+```csharp
+var resultado = listaDados
+                .Where(d => d.puntaje > 0)
+                .ToList();
+```            
+
+## Estructura base de una consulta LINQ
+
+Antes de aplicar los operadores, es importante comprender la estructura general de una consulta LINQ en la capa de datos.
 
 La estructura general es la siguiente:
 
