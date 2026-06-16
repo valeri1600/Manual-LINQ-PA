@@ -24,49 +24,30 @@ GestionUsuarios/
 
 ---
 
-## Caso 1: Listar todos los pacientes con su género
+# Caso 1: Listar todos los pacientes con su género
 
-### Problema
-El formulario del sistema debe mostrar en un DataGridView todos los pacientes registrados, incluyendo el nombre del género correspondiente. Aunque la tabla Paciente almacena únicamente el identificador del género, el usuario debe visualizar una descripción comprensible en lugar del valor numérico.
+## Problema
 
-### Entidades 
+El sistema debe recuperar todos los pacientes almacenados en la base de datos y mostrarlos en la interfaz junto con el nombre del género correspondiente.
 
-```csharp
-// Ref: GestionUsuarios_Entidades/PacienteEntidades.cs
-public class PacienteEntidades
-{
-    public int      Id              { get; set; }
-    public int      Id_Genero       { get; set; }
-    public string   Genero          { get; set; }   // nombre del género (no el ID)
-    public string   Nombre          { get; set; }
-    public string   Apellido        { get; set; }
-    public string   Cedula          { get; set; }
-    public DateTime FechaNacimiento { get; set; }
-    public string   Telefono        { get; set; }
-    public string   Direccion       { get; set; }
-    public bool     Afiliado        { get; set; }
-    public string   CodigoIESS      { get; set; }
-}
-```
+---
 
-### Paso 1 — Capa de Datos
-En la Capa de Datos se recuperan todos los registros de la tabla Paciente. Posteriormente, cada objeto obtenido mediante LINQ to SQL es transformado en una entidad del sistema (PacienteEntidades) para ser utilizada por las demás capas.
+## Paso 1: Capa de Datos
+
+La Capa de Datos obtiene todos los registros de la tabla `Paciente` utilizando LINQ to SQL. Posteriormente, los datos recuperados son convertidos a entidades del sistema para que puedan ser utilizados por las demás capas de la aplicación.
 
 ```csharp
 public static List<PacienteEntidades> DevolverListaPaciente()
 {
     List<PacienteEntidades> listaPaciente = new List<PacienteEntidades>();
-    List<Paciente> listaPacienteLinq = new List<Paciente>();
+    List<Paciente> listaPacienteLinQ = new List<Paciente>();
 
     using (ModePacienteDataContext contexto = new ModePacienteDataContext())
     {
-        var resultado = from p in contexto.Paciente
-                         select p;
-
-        listaPacienteLinq = resultado.ToList();
+        listaPacienteLinQ = contexto.Paciente.ToList();
     }
 
-    foreach (var item in listaPacienteLinq)
+    foreach (var item in listaPacienteLinQ)
     {
         listaPaciente.Add(new PacienteEntidades(
             item.id,
@@ -88,15 +69,20 @@ public static List<PacienteEntidades> DevolverListaPaciente()
 ```
 
 ### Aspectos importantes
-* Se utilizan dos listas porque pertenecen a capas diferentes de la aplicación.
-* `List<Paciente>` almacena los registros obtenidos directamente desde la base de datos.
-* `List<PacienteEntidades>` contiene los objetos que serán enviados a la Capa de Negocio y Presentación.
-* El foreach permite transformar cada objeto LINQ (`Paciente`) en una entidad propia del sistema (`PacienteEntidades`).
-* El nombre del género se obtiene mediante una consulta adicional utilizando el método `GeneroDatos.DevolverNombreGeneroPorId()`.
 
-Debido a que el proyecto utiliza LINQ to SQL y no Entity Framework, la relación entre `Paciente` y `Genero` se resuelve manualmente dentro del recorrido realizado por el foreach.
+* `ToList()` ejecuta la consulta y obtiene todos los registros de la tabla `Paciente`.
+* Se utilizan dos listas porque pertenecen a capas diferentes del sistema.
+* `listaPacienteLinQ` almacena los objetos obtenidos directamente desde la base de datos.
+* `listaPaciente` almacena las entidades que serán devueltas a las demás capas de la aplicación.
+* El `foreach` permite transformar cada objeto `Paciente` en un objeto `PacienteEntidades`.
+* El nombre del género se obtiene mediante el método `GeneroDatos.DevolverNombreGeneroPorId()`, ya que en la tabla `Paciente` únicamente se almacena el identificador del género.
 
-### Paso 2 — Capa de Negocio
+> **Importante:** El `foreach` actúa como un puente entre la entidad generada por LINQ to SQL y la entidad utilizada por la arquitectura del sistema, manteniendo separadas las responsabilidades de cada capa.
+
+---
+
+## Paso 2: Capa de Negocio
+
 La Capa de Negocio expone el método para que pueda ser utilizado por la interfaz de usuario.
 
 ```csharp
@@ -106,8 +92,11 @@ public static List<PacienteEntidades> DevolverListaPaciente()
 }
 ```
 
-### Paso 3 — Capa de Presentación
-Finalmente, la Capa de Presentación obtiene la información desde la Capa de Negocio y la muestra en el DataGridView.
+---
+
+## Paso 3: Capa de Presentación
+
+Finalmente, la Capa de Presentación obtiene la información desde la Capa de Negocio y la muestra en el `DataGridView`.
 
 ```csharp
 private void CargarListaPacientes()
@@ -116,15 +105,21 @@ private void CargarListaPacientes()
 }
 ```
 
-### Resultado esperado
+---
 
-| Id | Genero    | Nombre  | Apellido | Cédula      | Afiliado | Código IESS |
-|----|-----------|---------|----------|-------------|----------|-------------|
-| 1  | Masculino | Carlos  | Mora     | 1801234567  | Sí       | A001        |
-| 2  | Femenino  | Ana     | García   | 1809876543  | No       |             |
-| 3  | Femenino  | Diana   | Salazar  | 1805551234  | Sí       | A003        |
+## Resultado esperado
+
+| Id | Género    | Nombre | Apellido | Cédula     | Afiliado |
+| -- | --------- | ------ | -------- | ---------- | -------- |
+| 1  | Masculino | Carlos | Mora     | 1801234567 | Sí       |
+| 2  | Femenino  | Ana    | García   | 1809876543 | No       |
+| 3  | Femenino  | Diana  | Salazar  | 1805551234 | Sí       |
 
 ---
+
+## Conclusión
+
+Este caso demuestra cómo LINQ to SQL permite recuperar información desde la base de datos y adaptarla a la arquitectura del sistema mediante entidades propias. Además, evidencia la importancia de separar las entidades generadas por LINQ to SQL de las entidades utilizadas por la aplicación, favoreciendo un código más organizado y fácil de mantener.
 
 # Caso 2: Buscar un paciente por ID utilizando `FirstOrDefault()`
 
