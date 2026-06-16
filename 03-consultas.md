@@ -2,7 +2,9 @@
 Todos los ejemplos de esta sección se aplican al proyecto de simulación de dados utilizando **LINQ to SQL** en la **Capa de Datos**.
 
 ---
-Antes de empezar con las consultas de LINQ, es importante comprender cómo están conformadas y cuál es su estructura básica. En la mayoría de los casos, las consultas siguen una estructura inicial que consiste en crear una instancia del contexto de datos, acceder a la tabla correspondiente y aplicar los operadores de LINQ según la necesidad del sistema. La estructura general es la siguiente:
+Antes de empezar con las consultas de LINQ, es importante comprender cómo están conformadas y cuál es su estructura básica. En la mayoría de los casos, las consultas siguen una estructura inicial que consiste en crear una instancia del contexto de datos, acceder a la tabla correspondiente y aplicar los operadores de LINQ según la necesidad del sistema. 
+
+La estructura general es la siguiente:
 
 ```csharp
 using (DadosDataContext contexto = new DadosDataContext())
