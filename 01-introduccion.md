@@ -96,4 +96,4 @@ Las operaciones CRUD son las funciones básicas que se utilizan para trabajar co
 
 Estas operaciones permiten gestionar la información almacenada en una base de datos, ya sea para registrar nuevos datos, consultarlos, modificarlos o eliminarlos según las necesidades del sistema.
 
-En una arquitectura de software, los CRUD son fundamentales porque representan la base del manejo de datos dentro de cualquier aplicación, especialmente cuando se trabaja con bases de datos como SQL Server o tecnologías como LINQ.
+En una arquitectura de software, los CRUD son fundamentales porque representan la base del manejo de datos dentro de cualquier aplicación, especialmente cuando se trabaja con bases de datos como SQL Server o  LINQ.
