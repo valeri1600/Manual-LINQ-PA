@@ -8,7 +8,7 @@
 | # | Sección | Descripción |
 |---|---------|-------------|
 | 1 | [Introducción a LINQ](01-introduccion.md) | Qué es LINQ, tipos y cuándo usarlo |
-| 2 | [Arquitectura de Capas](02-arquitectura-capas.md) | Las 4 capas y dónde entra LINQ en cada una |
+| 2 | [Arquitectura de Capas](02-arquitectura-capas.md) | Las 4 capas y dónde entra LINQ  |
 | 3 | [Consultas Básicas](03-consultas-basicas.md) | Where, Select, OrderBy, FirstOrDefault |
 | 4 | [Funciones de Agregado](04-funciones-agregado.md) | Sum, Count, Average, Max, Min, GroupBy |
 | 5 | [Operaciones CRUD](05-crud-linq.md) | Create, Read, Update, Delete con LINQ/EF |
