@@ -431,7 +431,7 @@ FROM Dados
 WHERE puntaje > 0
 ORDER BY puntaje DESC;
 ```
-
+Resolucion: 
 ```csharp
 var lista =
     from d in contexto.Dados
