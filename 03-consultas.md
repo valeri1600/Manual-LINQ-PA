@@ -50,12 +50,12 @@ Esta estructura sirve como base para la mayoría de las consultas realizadas con
 
 ## ¿Qué significa `=>` en las consultas LINQ?
 
-Al comenzar a trabajar con LINQ, uno de los símbolos mas importante es `=>`. Este operador se conoce como **operador lambda** y se utiliza para indicar la condición o la acción que se aplicará sobre cada elemento de una colección.
+Al comenzar a trabajar con LINQ, uno de los símbolos mas importante es `=>`. Este operador se conoce como **operador lambda** y se utiliza para indicar la condicion o la accion que se aplicará sobre cada elemento de una colección.
 
 Su estructura general es la siguiente:
 
 ```csharp
-elemento => condición
+elemento => condicion
 ```
 
 Se puede leer como: **"Para cada elemento, realiza esta acción o verifica esta condición".**
